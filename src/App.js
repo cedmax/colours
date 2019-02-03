@@ -20,7 +20,7 @@ export default class App extends Component {
   onClick = color => {
     const background = tinycolor(color);
     const readAble = tinycolor
-      .mostReadable(color, colors.map(({ hex }) => hex))
+      .mostReadable(color, ["#ffffff", "#000000"])
       .toHexString();
 
     this.setState({
