@@ -138,7 +138,7 @@ export default class App extends Component {
                 background: color.hex,
                 width: 30,
                 height: 30,
-                border: "1px solid #000",
+                border: (color.hex === background)? 0 : "1px solid #000",
                 marginRight: 5,
                 marginBottom: 10,
                 verticalAlign: "top",
