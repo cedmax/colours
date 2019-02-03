@@ -1,6 +1,7 @@
 const fs = require("fs");
 const cheerio = require("cheerio");
 const settings = require("./settings.json");
+const cssColors = require("./data/css-colors.json");
 
 const colors = [];
 settings.dataSets.forEach(key => {
@@ -46,8 +47,20 @@ settings.dataSets.forEach(key => {
   }
 });
 
+const colWithCssMatch = colors.map(color => {
+  const cssMatch = cssColors.find(cssColor => {
+    const [name, hex] = cssColor;
+    return color.hex === hex;
+  });
+  if (cssMatch) {
+    const [name] = cssMatch;
+    color.cssName = name;
+  }
+  return color;
+});
+
 fs.writeFileSync(
-  `${__dirname}/data/colors.json`,
-  JSON.stringify(colors),
+  `${__dirname}/../src/colors.json`,
+  JSON.stringify(colWithCssMatch),
   "UTF-8"
 );
