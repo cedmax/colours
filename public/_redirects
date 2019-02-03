@@ -1,0 +1,5 @@
+# Redirect domain aliases to primary domain
+http://colors.dsgn.it/* http://colours.dsgn.it/:splat 301!
+
+# Optional: Redirect default Netlify subdomain to primary domain
+http://colours.netlify.com/* http://colours.dsgn.it/:splat 301!
