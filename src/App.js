@@ -146,7 +146,7 @@ export default class App extends Component {
             </div>
           </h2>
         </header>
-        <ol style={{ listStyle: "none", padding: 0 }}>
+        <ol style={{ listStyle: "none", padding: 0, margin: 0 }}>
           {!colors.length && (
             <h3 style={{ lineHeight: 5, textAlign: "center" }}>No Result</h3>
           )}
