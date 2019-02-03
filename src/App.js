@@ -17,14 +17,13 @@ export default class App extends Component {
     sorting: "name",
   };
 
-  onClick = color => {
-    const background = tinycolor(color);
+  onClick = hex => {
     const readAble = tinycolor
-      .mostReadable(color, ["#ffffff", "#000000"])
+      .mostReadable(hex, ["#ffffff", "#000000"])
       .toHexString();
 
     this.setState({
-      background: color, 
+      background: hex,
       color: readAble,
     });
   };
@@ -138,7 +137,10 @@ export default class App extends Component {
                 background: color.hex,
                 width: 30,
                 height: 30,
-                border: (color.hex === background)? `1px solid ${color.hex}` : "1px solid #000",
+                border:
+                  color.hex === background
+                    ? `1px solid ${color.hex}`
+                    : "1px solid #000",
                 marginRight: 5,
                 marginBottom: 10,
                 verticalAlign: "top",
@@ -173,5 +175,3 @@ export default class App extends Component {
     );
   }
 }
-
-//
