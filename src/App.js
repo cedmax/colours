@@ -130,7 +130,7 @@ export default class App extends Component {
           </div>
         </h2>
         {colors.map(color => (
-          <div key={color.name + color.hex}>
+          <div key={color.hex}>
             <span
               onClick={() => this.onClick(color.hex)}
               style={{

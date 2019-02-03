@@ -25,7 +25,7 @@ settings.dataSets.forEach(key => {
       const hue = hueDeg.substring(0, hueDeg.length - 1);
       const s = sat2.substring(0, sat2.length - 1);
       const v = val.substring(0, val.length - 1);
-      if (hex.startsWith("#")) {
+      if (hex.startsWith("#") && !colors.find(color => color.hex === hex)) {
         colors.push({
           name,
           hex,
