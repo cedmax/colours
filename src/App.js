@@ -4,8 +4,6 @@ import colorsort from "colorsort";
 import colors from "./colors.json";
 import "./app.css";
 
-const cs = new colorsort(colors.map(({ hex }) => hex).join(", "));
-
 const otherColor = 0.6;
 const furtherColor = 0.5;
 
@@ -14,7 +12,7 @@ export default class App extends Component {
     colors,
     background: "white",
     color: "black",
-    sorting: "name",
+    filter: "",
   };
 
   onClick = hex => {
@@ -29,6 +27,9 @@ export default class App extends Component {
   };
 
   sortByHue = () => {
+    const cs = new colorsort(
+      this.state.colors.map(({ hex }) => hex).join(", ")
+    );
     const { colors } = this.state;
     cs.sort("hue").formattedValues();
     const sortedColors = cs.formattedValues().map(hex => {
@@ -42,7 +43,6 @@ export default class App extends Component {
 
     this.setState({
       colors: sortedColors,
-      sorting: "hue",
     });
   };
 
@@ -58,7 +58,6 @@ export default class App extends Component {
     });
     this.setState({
       colors,
-      sorting: "hex",
     });
   };
 
@@ -72,105 +71,129 @@ export default class App extends Component {
     });
     this.setState({
       colors,
-      sorting: "name",
+    });
+  };
+
+  sortBy = e => {
+    switch (e.target.value) {
+      case "name":
+        this.sortByName();
+        break;
+      case "hue":
+        this.sortByHue();
+        break;
+      case "hex":
+        this.sortByHex();
+        break;
+      default:
+        return;
+    }
+  };
+
+  filter = e => {
+    const { value } = e.target;
+    const filtered = colors.filter(color => {
+      return color.name.toLowerCase().includes(value.toLowerCase());
+    });
+
+    this.setState({
+      filter: value,
+      colors: filtered,
     });
   };
 
   render() {
-    const { colors, background, color } = this.state;
+    const { colors, background, color, filter } = this.state;
     return (
       <div
         style={{
           color,
           background,
-          columns: "250px 3",
+          columns: "300px 3",
           fontFamily: "Sans-Serif",
           fontSize: 15,
           padding: ".5rem",
         }}
       >
-        <h2>
-          Colour Name <em style={{ opacity: otherColor }}>/ Css Name</em>
-          <br />
-          <div style={{ fontSize: "80%" }}>
-            <em style={{ opacity: otherColor }}>#Hex</em>{" "}
-            <span
-              style={{
-                fontSize: "70%",
-                marginLeft: "8px",
-              }}
-            >
-              <span style={{ opacity: furtherColor }}>Sort by: </span>
-              <input
-                type="radio"
-                name="sorting"
-                value="name"
-                onChange={this.sortByName}
-                checked={this.state.sorting === "name"}
-              />{" "}
-              <span style={{ opacity: furtherColor }}>Name </span>
-              <input
-                type="radio"
-                name="sorting"
-                value="hue"
-                onChange={this.sortByHue}
-                checked={this.state.sorting === "hue"}
-              />{" "}
-              <span style={{ opacity: furtherColor }}>Hue </span>
-              <input
-                type="radio"
-                name="sorting"
-                value="hex"
-                onChange={this.sortByHex}
-                checked={this.state.sorting === "hex"}
-              />{" "}
-              <span style={{ opacity: furtherColor }}>Hex</span>
-            </span>
-          </div>
-        </h2>
-        {colors.map(color => (
-          <div key={color.hex}>
-            <span
-              onClick={() => this.onClick(color.hex)}
-              style={{
-                display: "inline-block",
-                background: color.hex,
-                width: 30,
-                height: 30,
-                border:
-                  color.hex === background
-                    ? `1px solid ${color.hex}`
-                    : "1px solid #000",
-                marginRight: 5,
-                marginBottom: 10,
-                verticalAlign: "top",
-                cursor: "pointer",
-              }}
-            />
-            <span
-              style={{
-                display: "inline-block",
-                verticalAlign: "top",
-                lineHeight: 1.2,
-              }}
-            >
-              {color.name}{" "}
-              {color.cssName && (
-                <em style={{ opacity: otherColor }}>/ {color.cssName} </em>
-              )}
-              <em
+        <header style={{ maxWidth: 300 }}>
+          <h2>
+            Colour Name <em style={{ opacity: otherColor }}>/ Css Name</em>
+            <br />
+            <div style={{ fontSize: "80%" }}>
+              <em style={{ opacity: otherColor }}>#Hex</em>{" "}
+              <span
                 style={{
-                  opacity: otherColor,
-                  fontVariant: "small-caps",
-                  fontSize: "80%",
-                  display: "block",
+                  fontSize: "70%",
+                  marginLeft: "8px",
                 }}
               >
-                {color.hex}
-              </em>
-            </span>
-          </div>
-        ))}
+                <span style={{ opacity: furtherColor }}>Sort by: </span>
+                <select onChange={this.sortBy}>
+                  <option value="name">Name</option>
+                  <option value="hue">Hue</option>
+                  <option value="hex">Hex</option>
+                </select>
+                <span style={{ opacity: furtherColor, marginLeft: 10 }}>
+                  Filter:{" "}
+                </span>
+                <input
+                  onChange={this.filter}
+                  style={{ width: 70 }}
+                  type="text"
+                  value={filter}
+                />
+              </span>
+            </div>
+          </h2>
+        </header>
+        <ol style={{ listStyle: "none", padding: 0 }}>
+          {!colors.length && (
+            <h3 style={{ lineHeight: 5, textAlign: "center" }}>No Result</h3>
+          )}
+          {colors.map(color => (
+            <li key={color.hex}>
+              <span
+                onClick={() => this.onClick(color.hex)}
+                style={{
+                  display: "inline-block",
+                  background: color.hex,
+                  width: 30,
+                  height: 30,
+                  border:
+                    color.hex === background
+                      ? `1px solid ${color.hex}`
+                      : "1px solid #000",
+                  marginRight: 5,
+                  marginBottom: 10,
+                  verticalAlign: "top",
+                  cursor: "pointer",
+                }}
+              />
+              <span
+                style={{
+                  display: "inline-block",
+                  verticalAlign: "top",
+                  lineHeight: 1.2,
+                }}
+              >
+                {color.name}{" "}
+                {color.cssName && (
+                  <em style={{ opacity: otherColor }}>/ {color.cssName} </em>
+                )}
+                <em
+                  style={{
+                    opacity: otherColor,
+                    fontVariant: "small-caps",
+                    fontSize: "80%",
+                    display: "block",
+                  }}
+                >
+                  {color.hex}
+                </em>
+              </span>
+            </li>
+          ))}
+        </ol>
       </div>
     );
   }
