@@ -24,7 +24,7 @@ export default class App extends Component {
       .toHexString();
 
     this.setState({
-      background: color.hex,
+      background: color, 
       color: readAble,
     });
   };
