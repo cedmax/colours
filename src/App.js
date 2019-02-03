@@ -1,13 +1,32 @@
 import React, { Component } from "react";
-import colors from "./colors.json";
+import tinycolor from "tinycolor2";
 import colorsort from "colorsort";
+import colors from "./colors.json";
+import "./app.css";
 
 const cs = new colorsort(colors.map(({ hex }) => hex).join(", "));
+
+const otherColor = 0.6;
+const furtherColor = 0.5;
 
 export default class App extends Component {
   state = {
     colors,
+    background: "white",
+    color: "black",
     sorting: "name",
+  };
+
+  onClick = color => {
+    const background = tinycolor(color);
+    const readAble = tinycolor
+      .mostReadable(color, colors.map(({ hex }) => hex))
+      .toHexString();
+
+    this.setState({
+      background,
+      color: readAble,
+    });
   };
 
   sortByHue = () => {
@@ -59,18 +78,30 @@ export default class App extends Component {
   };
 
   render() {
-    const { colors } = this.state;
+    const { colors, background, color } = this.state;
     return (
       <div
-        style={{ columns: "250px 3", fontFamily: "Sans-Serif", fontSize: 15 }}
+        style={{
+          color,
+          background,
+          columns: "250px 3",
+          fontFamily: "Sans-Serif",
+          fontSize: 15,
+          padding: ".5rem",
+        }}
       >
         <h2>
-          Colour Name <em style={{ color: "#666" }}>/ Css Name</em>
+          Colour Name <em style={{ opacity: otherColor }}>/ Css Name</em>
           <br />
-          <div style={{ fontSize: "80%", color: "#666" }}>
-            <em>#Hex</em>{" "}
-            <span style={{ fontSize: "70%", color: "#888", marginLeft: "8px" }}>
-              Sort by:{" "}
+          <div style={{ fontSize: "80%" }}>
+            <em style={{ opacity: otherColor }}>#Hex</em>{" "}
+            <span
+              style={{
+                fontSize: "70%",
+                marginLeft: "8px",
+              }}
+            >
+              <span style={{ opacity: furtherColor }}>Sort by: </span>
               <input
                 type="radio"
                 name="sorting"
@@ -78,7 +109,7 @@ export default class App extends Component {
                 onChange={this.sortByName}
                 checked={this.state.sorting === "name"}
               />{" "}
-              Name{" "}
+              <span style={{ opacity: furtherColor }}>Name </span>
               <input
                 type="radio"
                 name="sorting"
@@ -86,7 +117,7 @@ export default class App extends Component {
                 onChange={this.sortByHue}
                 checked={this.state.sorting === "hue"}
               />{" "}
-              Hue{" "}
+              <span style={{ opacity: furtherColor }}>Hue </span>
               <input
                 type="radio"
                 name="sorting"
@@ -94,13 +125,14 @@ export default class App extends Component {
                 onChange={this.sortByHex}
                 checked={this.state.sorting === "hex"}
               />{" "}
-              Hex
+              <span style={{ opacity: furtherColor }}>Hex</span>
             </span>
           </div>
         </h2>
         {colors.map(color => (
           <div key={color.name + color.hex}>
             <span
+              onClick={() => this.onClick(color.hex)}
               style={{
                 display: "inline-block",
                 background: color.hex,
@@ -110,6 +142,7 @@ export default class App extends Component {
                 marginRight: 5,
                 marginBottom: 10,
                 verticalAlign: "top",
+                cursor: "pointer",
               }}
             />
             <span
@@ -121,11 +154,11 @@ export default class App extends Component {
             >
               {color.name}{" "}
               {color.cssName && (
-                <em style={{ color: "#666" }}>/ {color.cssName} </em>
+                <em style={{ opacity: otherColor }}>/ {color.cssName} </em>
               )}
               <em
                 style={{
-                  color: "#666",
+                  opacity: otherColor,
                   fontVariant: "small-caps",
                   fontSize: "80%",
                   display: "block",
