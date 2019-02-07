@@ -2,17 +2,23 @@ import React, { Component } from "react";
 import tinycolor from "tinycolor2";
 import colorsort from "colorsort";
 import colors from "./colors.json";
+import ColorElm from "./ColorElm";
+import Details from "./Details";
 import "./app.css";
-
-const otherColor = 0.6;
-const furtherColor = 0.5;
 
 export default class App extends Component {
   state = {
     colors,
-    background: "white",
-    color: "black",
+    selected: {
+      hex: "",
+    },
     filter: "",
+    style: {
+      color: "black",
+      background: "white",
+      opacity: 0.6,
+      lightOpacity: 0.5,
+    },
   };
 
   onClick = hex => {
@@ -20,9 +26,19 @@ export default class App extends Component {
       .mostReadable(hex, ["#ffffff", "#000000"])
       .toHexString();
 
+    let selected = colors.find(color => color.hex === hex);
+    if (!selected) {
+      selected = {
+        hex,
+      };
+    }
     this.setState({
-      background: hex,
-      color: readAble,
+      selected,
+      style: {
+        ...this.state.style,
+        background: hex,
+        color: readAble,
+      },
     });
   };
 
@@ -103,12 +119,12 @@ export default class App extends Component {
   };
 
   render() {
-    const { colors, background, color, filter } = this.state;
+    const { colors, filter, selected, style } = this.state;
     return (
       <div
         style={{
-          color,
-          background,
+          color: style.color,
+          background: style.background,
           columns: "300px 3",
           fontFamily: "Sans-Serif",
           fontSize: 15,
@@ -117,23 +133,23 @@ export default class App extends Component {
       >
         <header style={{ maxWidth: 300 }}>
           <h2>
-            Colour Name <em style={{ opacity: otherColor }}>/ Css Name</em>
+            Colour Name <em style={{ opacity: style.opacity }}>/ Css Name</em>
             <br />
             <div style={{ fontSize: "80%" }}>
-              <em style={{ opacity: otherColor }}>#Hex</em>{" "}
+              <em style={{ opacity: style.opacity }}>#Hex</em>{" "}
               <span
                 style={{
                   fontSize: "70%",
                   marginLeft: "8px",
                 }}
               >
-                <span style={{ opacity: furtherColor }}>Sort by: </span>
+                <span style={{ opacity: style.lightOpacity }}>Sort by: </span>
                 <select onChange={this.sortBy}>
                   <option value="name">Name</option>
                   <option value="hue">Hue</option>
                   <option value="hex">Hex</option>
                 </select>
-                <span style={{ opacity: furtherColor, marginLeft: 10 }}>
+                <span style={{ opacity: style.lightOpacity, marginLeft: 10 }}>
                   Filter:{" "}
                 </span>
                 <input
@@ -151,49 +167,12 @@ export default class App extends Component {
             <h3 style={{ lineHeight: 5, textAlign: "center" }}>No Result</h3>
           )}
           {colors.map(color => (
-            <li key={color.hex}>
-              <span
-                onClick={() => this.onClick(color.hex)}
-                style={{
-                  display: "inline-block",
-                  background: color.hex,
-                  width: 30,
-                  height: 30,
-                  border:
-                    color.hex === background
-                      ? `1px solid ${color.hex}`
-                      : "1px solid #000",
-                  marginRight: 5,
-                  marginBottom: 10,
-                  verticalAlign: "top",
-                  cursor: "pointer",
-                }}
-              />
-              <span
-                style={{
-                  display: "inline-block",
-                  verticalAlign: "top",
-                  lineHeight: 1.2,
-                }}
-              >
-                {color.name}{" "}
-                {color.cssName && (
-                  <em style={{ opacity: otherColor }}>/ {color.cssName} </em>
-                )}
-                <em
-                  style={{
-                    opacity: otherColor,
-                    fontVariant: "small-caps",
-                    fontSize: "80%",
-                    display: "block",
-                  }}
-                >
-                  {color.hex}
-                </em>
-              </span>
+            <li style={{ marginBottom: 10 }} key={color.hex}>
+              <ColorElm onClick={this.onClick} {...color} style={style} />
             </li>
           ))}
         </ol>
+        <Details onClick={this.onClick} {...selected} style={style} />
       </div>
     );
   }
