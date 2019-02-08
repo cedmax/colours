@@ -129,6 +129,7 @@ export default class App extends Component {
           fontFamily: "Sans-Serif",
           fontSize: 15,
           padding: ".5rem",
+          minHeight: "100vh",
         }}
       >
         <header style={{ maxWidth: 300 }}>
