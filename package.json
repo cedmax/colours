@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^10.0.7",
+    "@emotion/styled": "^10.0.7",
     "colorsort": "^1.0.1",
+    "emotion-theming": "^10.0.7",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-modal": "^3.8.1",

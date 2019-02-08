@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import tinycolor from "tinycolor2";
 import colorsort from "colorsort";
+import { ThemeProvider } from "emotion-theming";
 import colors from "./colors.json";
-import ColorElm from "./ColorElm";
-import Details from "./Details";
+import ColorElm from "./components/ColorElm";
+import Details from "./components/Details";
+import Template from "./components/Template";
+import Filters from "./components/Filters";
+import Header from "./components/Header";
+import { List, ListItem } from "./components/List";
 import "./app.css";
+import EmptyList from "./components/EmptyList.js";
 
 export default class App extends Component {
   state = {
@@ -12,7 +18,7 @@ export default class App extends Component {
     selected: {
       hex: "",
     },
-    filter: "",
+    currentFilter: "",
     style: {
       color: "black",
       background: "white",
@@ -113,68 +119,34 @@ export default class App extends Component {
     });
 
     this.setState({
-      filter: value,
+      currentFilter: value,
       colors: filtered,
     });
   };
 
   render() {
-    const { colors, filter, selected, style } = this.state;
+    const { colors, currentFilter, selected, style } = this.state;
     return (
-      <div
-        style={{
-          color: style.color,
-          background: style.background,
-          columns: "300px 3",
-          fontFamily: "Sans-Serif",
-          fontSize: 15,
-          padding: ".5rem",
-          minHeight: "100vh",
-        }}
-      >
-        <header style={{ maxWidth: 300 }}>
-          <h2>
-            Colour Name <em style={{ opacity: style.opacity }}>/ Css Name</em>
-            <br />
-            <div style={{ fontSize: "80%" }}>
-              <em style={{ opacity: style.opacity }}>#Hex</em>{" "}
-              <span
-                style={{
-                  fontSize: "70%",
-                  marginLeft: "8px",
-                }}
-              >
-                <span style={{ opacity: style.lightOpacity }}>Sort by: </span>
-                <select onChange={this.sortBy}>
-                  <option value="name">Name</option>
-                  <option value="hue">Hue</option>
-                  <option value="hex">Hex</option>
-                </select>
-                <span style={{ opacity: style.lightOpacity, marginLeft: 10 }}>
-                  Filter:{" "}
-                </span>
-                <input
-                  onChange={this.filter}
-                  style={{ width: 70 }}
-                  type="text"
-                  value={filter}
-                />
-              </span>
-            </div>
-          </h2>
-        </header>
-        <ol style={{ listStyle: "none", padding: 0, margin: 0 }}>
-          {!colors.length && (
-            <h3 style={{ lineHeight: 5, textAlign: "center" }}>No Result</h3>
-          )}
-          {colors.map(color => (
-            <li style={{ marginBottom: 10 }} key={color.hex}>
-              <ColorElm onClick={this.onClick} {...color} style={style} />
-            </li>
-          ))}
-        </ol>
-        <Details onClick={this.onClick} {...selected} style={style} />
-      </div>
+      <ThemeProvider theme={style}>
+        <Template>
+          <Header>
+            <Filters
+              sortBy={this.sortBy}
+              filter={this.filter}
+              currentFilter={currentFilter}
+            />
+          </Header>
+          <List>
+            {colors.map(color => (
+              <ListItem key={color.hex}>
+                <ColorElm onClick={this.onClick} color={color} />
+              </ListItem>
+            ))}
+          </List>
+          <EmptyList visible={!colors.length} />
+          <Details onClick={this.onClick} {...selected} />
+        </Template>
+      </ThemeProvider>
     );
   }
 }
