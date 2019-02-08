@@ -11,9 +11,7 @@ export default {
       const index = colors.findIndex(
         color => color.hex.toUpperCase() === hex.toUpperCase()
       );
-      const color = colors[index];
-      colors.splice(index, 1);
-      return color;
+      return colors[index];
     });
 
     return {
