@@ -33,8 +33,8 @@ const CloseButton = styled.button`
   width: 25px;
 `;
 
-export default ({ title, children, isOpen, close }) => (
-  <Modal isOpen={isOpen} style={modalStyle} contentLabel={title}>
+export default ({ title, children, close }) => (
+  <Modal isOpen={true} style={modalStyle} contentLabel={title}>
     {children}
     <CloseButton onClick={close}>x</CloseButton>
   </Modal>

@@ -1,52 +1,42 @@
-import React, { Component } from "react";
-import tinycolor from "tinycolor2";
+import React, { useState } from "react";
+import colorsHelper from "../helpers/colors";
 import Modal from "./Modal";
 import { ListColours, Columns, SectionTitle } from "./DetailsParts";
 
-const uniq = arr => [...new Set(arr)];
-
-export default class Detail extends Component {
-  state = {
+export default React.memo(props => {
+  const [state, setState] = useState({
     hex: "",
     open: false,
-  };
+  });
 
-  close = () => {
-    this.setState({
-      open: false,
-    });
-  };
+  const { hex, open } = state;
 
-  static getDerivedStateFromProps(props, state) {
-    return {
+  if (hex !== props.hex) {
+    setState({
       hex: props.hex,
-      open: props.hex !== state.hex,
-    };
+      open: true,
+    });
   }
 
-  render() {
-    const { name, hex, onClick } = this.props;
-    const color = tinycolor(hex);
-    const complements = uniq(
-      color.splitcomplement().map(an => an.toHexString().toUpperCase())
-    );
-    const triads = uniq(
-      color.triad().map(an => an.toHexString().toUpperCase())
-    );
-    return (
-      <Modal
-        close={this.close}
-        isOpen={this.state.open}
-        title={`${name} details`}
-      >
-        <h2>{name}</h2>
-        <Columns>
-          <SectionTitle>Complements</SectionTitle>
-          <ListColours list={complements} onClick={onClick} />
-          <SectionTitle>Triad</SectionTitle>
-          <ListColours list={triads} onClick={onClick} />
-        </Columns>
-      </Modal>
-    );
+  if (!open) {
+    return;
   }
-}
+
+  const { complements, triads } = colorsHelper(hex);
+  const { name, onClick } = props;
+
+  return (
+    <Modal
+      close={() => setState({ hex, open: false })}
+      title={`${name} details`}
+    >
+      <h2>{name || hex}</h2>
+      <Columns>
+        <SectionTitle>Complements</SectionTitle>
+        <ListColours list={complements} onClick={onClick} />
+        <SectionTitle>Triad</SectionTitle>
+        <ListColours list={triads} onClick={onClick} />
+      </Columns>
+    </Modal>
+  );
+});
