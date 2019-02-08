@@ -12,6 +12,7 @@ import EmptyList from "./components/EmptyList.js";
 import reducers from "./helpers/reducers";
 
 const defaultState = {
+  allColors: colors,
   colors,
   selected: {
     hex: "",

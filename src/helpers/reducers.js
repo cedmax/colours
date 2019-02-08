@@ -8,7 +8,7 @@ export const actionObject = (type, payload) => ({ type, payload });
 
 export default createReducers({
   filter: (state, value) => {
-    const filtered = state.colors.filter(color => {
+    const filtered = state.allColors.filter(color => {
       return color.name.toLowerCase().includes(value.toLowerCase());
     });
 
