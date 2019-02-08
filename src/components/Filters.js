@@ -7,7 +7,7 @@ const Small = styled.span`
 
 const Title = styled.span`
   opacity: ${props => props.theme.lightOpacity};
-  margin-left: 10px;
+  margin-left: 0.5rem;
 `;
 
 export default ({ sortBy, filter, currentFilter }) => (
