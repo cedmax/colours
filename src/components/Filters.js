@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "@emotion/styled/macro";
 
 const Small = styled.span`
@@ -10,20 +10,20 @@ const Title = styled.span`
   margin-left: 10px;
 `;
 
-export default ({ sortBy, filter, currentFilter }) => (
+export default memo(({ sortBy, filter, currentFilter, currentSortBy }) => (
   <Small>
     <Title>Sort by: </Title>
-    <select onChange={sortBy}>
+    <select value={currentSortBy} onChange={e => sortBy(e.target.value)}>
       <option value="name">Name</option>
       <option value="hue">Hue</option>
       <option value="hex">Hex</option>
     </select>
     <Title>Filter: </Title>
     <input
-      onChange={filter}
+      onChange={e => filter(e.target.value)}
       style={{ width: 70 }}
       type="text"
       value={currentFilter}
     />
   </Small>
-);
+));

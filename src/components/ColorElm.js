@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, memo } from "react";
 import {
   ColorSquare,
   ColorTitle,
@@ -20,13 +20,9 @@ const Details = ({ color }) => (
   </ColorDetails>
 );
 
-export default ({ color, onClick, forceBorder }) => (
+export default memo(({ color, onChange }) => (
   <Fragment>
-    <ColorSquare
-      forceBorder={forceBorder}
-      hex={color.hex}
-      onClick={() => onClick(color.hex)}
-    />
+    <ColorSquare hex={color.hex} onMouseOver={() => onChange(color.hex)} />
     <Details color={color} />
   </Fragment>
-);
+));

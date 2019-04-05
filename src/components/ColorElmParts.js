@@ -6,9 +6,9 @@ export const ColorSquare = styled.span`
   width: 30px;
   height: 30px;
   border: ${props =>
-    props.hex === props.theme.background && !props.forceBorder
+    props.hex === props.theme.background
       ? `1px solid ${props.hex}`
-      : "1px solid #000"};
+      : `1px solid black`};
   margin-right: 5px;
   vertical-align: middle;
   pointer-events: ${props =>

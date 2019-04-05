@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "@emotion/styled/macro";
 
 const Title = styled.h3`
@@ -6,4 +6,4 @@ const Title = styled.h3`
   text-align: center;
 `;
 
-export default ({ visible }) => visible && <Title>No Result</Title>;
+export default memo(() => <Title>No Result</Title>);
