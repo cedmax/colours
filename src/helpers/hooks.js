@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { objectToHistory, listenToHistory } from "./utils";
 
-export const useHistory = (values, setters) => {
+export const useQueryString = (values, setters) => {
   const [urlRestored, setUrlRestored] = useState(false);
 
   useEffect(() => {

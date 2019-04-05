@@ -24,6 +24,17 @@ export const objectToHistory = obj => {
 
 export const listenToHistory = callback => {
   const getQs = () => qs.parse(window.location.search);
-  window.onpopstate = () => callback(getQs());
+  window.addEventListener("popstate", () => callback(getQs()));
   callback(getQs());
+};
+
+export const subscribeToHistory = callback => {
+  const listener = () => callback(qs.parse(window.location.search));
+  window.addEventListener("popstate", listener);
+  listener();
+  return listener;
+};
+
+export const unsubscribeFromHistory = listener => {
+  window.removeEventListener("popstate", listener);
 };
