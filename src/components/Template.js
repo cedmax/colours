@@ -7,6 +7,7 @@ const Template = styled.div`
   font-size: 15px;
   padding: 0.5rem;
   min-height: 100vh;
+  transition: background 1s;
 `;
 
 export default Template;

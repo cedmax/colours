@@ -6,4 +6,4 @@ const Title = styled.h3`
   text-align: center;
 `;
 
-export default ({ visible }) => visible && <Title>No Result</Title>;
+export default () => <Title>No Result</Title>;

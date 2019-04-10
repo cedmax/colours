@@ -1,3 +1,6 @@
+import React from 'react';
+import ColorElm from "./ColorElm";
+import EmptyList from "./EmptyList";
 import styled from "@emotion/styled/macro";
 
 export const List = styled.ol`
@@ -9,3 +12,17 @@ export const List = styled.ol`
 export const ListItem = styled.li`
   margin-bottom: 10px;
 `;
+
+
+export default ({ colors, onClick }) => !!colors.length ? (
+<List>
+  {colors.map(color => (
+    <ListItem key={color.hex}>
+      <ColorElm
+        onClick={onClick}
+        color={color}
+      />
+    </ListItem>
+  ))}
+  </List>) : (<EmptyList />
+)
