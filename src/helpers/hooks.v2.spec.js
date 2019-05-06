@@ -31,8 +31,8 @@ describe("useQueryString", () => {
     expect(subscribeToHistory).toBeCalledTimes(1);
 
     const callback = subscribeToHistory.mock.calls[0][0];
-    callback({ value: "a" });
-    expect(stateSetter).toBeCalledWith("a");
+    callback({ value: "b" });
+    expect(stateSetter).toBeCalledWith("b");
   });
 
   const wrapper = mount(<Component value="a" />);
