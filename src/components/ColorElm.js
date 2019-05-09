@@ -22,7 +22,7 @@ const Details = ({ color }) => (
 
 export default memo(({ color, onChange }) => (
   <Fragment>
-    <ColorSquare hex={color.hex} onMouseOver={() => onChange(color.hex)} />
+    <ColorSquare hex={color.hex} onClick={() => onChange(color.hex)} />
     <Details color={color} />
   </Fragment>
 ));
