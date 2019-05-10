@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { objectToHistory, listenToHistory } from "./utils";
 
-export const useQueryString = (values, setters) => {
+export const useQueryString = (values, setters, defaults) => {
   const [urlRestored, setUrlRestored] = useState(false);
 
   useEffect(() => {
@@ -9,7 +9,7 @@ export const useQueryString = (values, setters) => {
       listenToHistory(data => {
         Object.keys(values).forEach(k => {
           const value = data[k];
-          value && setters[k](value);
+          setters[k](value || defaults[k]);
         });
       });
       setUrlRestored(true);

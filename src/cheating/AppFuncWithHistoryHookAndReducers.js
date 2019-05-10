@@ -34,7 +34,8 @@ export default () => {
   const { currentFilter, currentSortBy, style, colors } = state;
   useQueryString(
     { currentSortBy, currentFilter },
-    { currentSortBy: sortBy, currentFilter: filter }
+    { currentSortBy: sortBy, currentFilter: filter },
+    defaultState
   );
 
   return (

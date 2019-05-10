@@ -5,14 +5,14 @@ import {
   unsubscribeFromHistory,
 } from "./utils";
 
-export const useQueryString = (values, setters) => {
+export const useQueryString = (values, setters, defaults) => {
   const [historyListener, setHistoryListener] = useState(null);
   useEffect(() => {
     if (!historyListener) {
       const listener = subscribeToHistory(data => {
         Object.keys(values).forEach(k => {
           const value = data[k];
-          value && setters[k](value);
+          setters[k](value || defaults[k]);
         });
       });
       setHistoryListener(() => listener);

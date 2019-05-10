@@ -14,10 +14,13 @@ const constants = {
   lightOpacity: 0.5,
 };
 
+const defaultFilter = "";
+const defaultSortBy = "name";
+
 export default () => {
   const [colors, setColors] = useState(originalList);
-  const [currentFilter, setCurrentFilter] = useState("");
-  const [currentSortBy, setCurrentSortBy] = useState("name");
+  const [currentFilter, setCurrentFilter] = useState(defaultFilter);
+  const [currentSortBy, setCurrentSortBy] = useState(defaultSortBy);
   const [style, setStyle] = useState({
     ...constants,
     color: "black",
@@ -46,7 +49,8 @@ export default () => {
 
   useQueryString(
     { currentSortBy, currentFilter },
-    { currentSortBy: sortBy, currentFilter: filter }
+    { currentSortBy: sortBy, currentFilter: filter },
+    { currentSortBy: defaultSortBy, currentFilter: defaultFilter }
   );
 
   return (

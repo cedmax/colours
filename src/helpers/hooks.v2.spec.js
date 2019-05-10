@@ -16,7 +16,11 @@ jest.mock("./utils", () => ({
 describe("useQueryString", () => {
   const stateSetter = jest.fn();
   const Component = ({ value }) => {
-    useQueryString({ value }, { value: stateSetter });
+    useQueryString(
+      { value },
+      { value: stateSetter },
+      { value: "defaultValue" }
+    );
     return null;
   };
 
@@ -33,6 +37,9 @@ describe("useQueryString", () => {
     const callback = subscribeToHistory.mock.calls[0][0];
     callback({ value: "b" });
     expect(stateSetter).toBeCalledWith("b");
+
+    callback({ value: "" });
+    expect(stateSetter).toBeCalledWith("defaultValue");
   });
 
   const wrapper = mount(<Component value="a" />);

@@ -18,10 +18,13 @@ const constants = {
   lightOpacity: 0.5,
 };
 
+const defaultFilter = "";
+const defaultSortBy = "name";
+
 export default () => {
   const [colors, setColors] = useState(originalList);
-  const [currentFilter, setCurrentFilter] = useState("");
-  const [currentSortBy, setCurrentSortBy] = useState("name");
+  const [currentFilter, setCurrentFilter] = useState(defaultFilter);
+  const [currentSortBy, setCurrentSortBy] = useState(defaultSortBy);
   const [style, setStyle] = useState({
     ...constants,
     color: "black",
@@ -53,8 +56,8 @@ export default () => {
     if (!urlRestored) {
       listenToHistory(data => {
         const { currentFilter, currentSortBy } = data;
-        currentSortBy && sortBy(currentSortBy);
-        currentFilter && filter(currentFilter);
+        sortBy(currentSortBy || defaultSortBy);
+        filter(currentFilter || defaultFilter);
       });
       setUrlRestored(true);
     } else {

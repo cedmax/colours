@@ -30,7 +30,8 @@ export default () => {
   const { currentFilter, currentSortBy } = state;
   useQueryString(
     { currentSortBy, currentFilter },
-    { currentSortBy: sortBy, currentFilter: filter }
+    { currentSortBy: sortBy, currentFilter: filter },
+    defaultState
   );
 
   return (
