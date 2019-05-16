@@ -6,5 +6,7 @@ import App from "./App";
 import "./style.css";
 
 Modal.setAppElement("#root");
-ReactDOM.render(<App />, document.getElementById("root"));
+const data = JSON.parse(document.getElementById("data").innerText);
+
+ReactDOM.render(<App data={data} />, document.getElementById("root"));
 serviceWorker.register();
