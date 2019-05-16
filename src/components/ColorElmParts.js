@@ -2,7 +2,6 @@ import styled from "@emotion/styled/macro";
 
 export const ColorSquare = styled.span`
   display: inline-block;
-  background: ${props => props.hex};
   width: 30px;
   height: 30px;
   border: ${props =>
@@ -15,6 +14,7 @@ export const ColorSquare = styled.span`
     props.hex === props.theme.background ? "none" : "all"};
   cursor: ${props =>
     props.hex === props.theme.background ? "auto" : "pointer"};
+  transition: border 1s;
 `;
 
 export const ColorTitle = styled.em`

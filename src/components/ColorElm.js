@@ -23,6 +23,9 @@ const Details = ({ color }) => (
 export default ({ color, onClick, forceBorder }) => (
   <Fragment>
     <ColorSquare
+      style={{
+        background: color.hex,
+      }}
       forceBorder={forceBorder}
       hex={color.hex}
       onClick={() => onClick(color.hex)}
