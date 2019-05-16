@@ -20,23 +20,27 @@ settings.dataSets.forEach(key => {
             .text()
             .trim()
         );
-      const [name, hex, r, g, b, sortHue, sat1, lum, sat2, val] = data;
+      const [name, hex, r, g, b, sortHue, sat1, lum] = data;
 
       const hueDeg = sortHue.split("♠")[1] || "0°";
-      const hue = hueDeg.substring(0, hueDeg.length - 1);
-      const s = sat2.substring(0, sat2.length - 1);
-      const v = val.substring(0, val.length - 1);
+      const h = hueDeg.substring(0, hueDeg.length - 1);
+      const s = sat1.substring(0, sat1.length - 1);
+      const l = lum.substring(0, lum.length - 1);
       if (hex.startsWith("#") && !colors.find(color => color.hex === hex)) {
         colors.push({
           name,
           hex,
-          r,
-          g,
-          b,
+          rgb: {
+            r,
+            g,
+            b,
+          },
           sortHue,
-          hue,
-          s,
-          v,
+          hsl: {
+            h,
+            s,
+            l,
+          },
         });
 
         console.log("pushed", name);
@@ -59,8 +63,7 @@ const colWithCssMatch = colors.map(color => {
   return color;
 });
 
-fs.writeFileSync(
-  `${__dirname}/../src/colors.json`,
-  JSON.stringify(colWithCssMatch),
-  "UTF-8"
-);
+const html = fs.readFileSync(`${__dirname}/../public/index.html`);
+const $ = cheerio.load(html);
+$("#data").text(JSON.stringify(colWithCssMatch));
+fs.writeFileSync(`${__dirname}/../public/index.html`, $.html(), "UTF-8");
