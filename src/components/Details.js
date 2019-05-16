@@ -23,11 +23,14 @@ export default React.memo(props => {
   }
 
   const { complements, triads } = colorsHelper(hex);
-  const { name, onClick } = props;
+  const { name, onClick, defaultHex } = props;
 
   return (
     <Modal
-      close={() => setState({ hex, open: false })}
+      close={() => {
+        onClick(defaultHex);
+        setState({ hex: defaultHex, open: false });
+      }}
       title={`${name} details`}
     >
       <h2>{name || hex}</h2>

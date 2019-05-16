@@ -15,6 +15,7 @@ const defaultState = colors => ({
   },
   currentFilter: "",
   style: {
+    defaultBk: "white",
     color: "black",
     background: "white",
     opacity: 0.6,
@@ -31,7 +32,7 @@ export default ({ data }) => {
     dispatch({ type: "filter", payload: e.target.value })
   );
   const select = useCallback(hex => dispatch({ type: "select", payload: hex }));
-  
+
   const { colors, style, currentFilter, selected } = state;
   return (
     <ThemeProvider theme={style}>
@@ -44,10 +45,7 @@ export default ({ data }) => {
           />
         </Header>
         <List colors={colors} onClick={select} />
-        <Details
-          onClick={select}
-          {...selected}
-        />
+        <Details defaultHex={style.defaultBk} onClick={select} {...selected} />
       </Template>
     </ThemeProvider>
   );
