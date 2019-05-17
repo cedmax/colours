@@ -7,7 +7,7 @@ import Header from "./components/Header";
 import List from "./components/List";
 import reducers from "./helpers/reducers";
 
-const defaultState = ({colors, ranges}) => ({
+const defaultState = ({ colors, ranges }) => ({
   allColors: colors,
   ranges,
   colors,
@@ -15,7 +15,6 @@ const defaultState = ({colors, ranges}) => ({
     hex: "",
   },
   currentSort: "name",
-  currentFilter: "",
   style: {
     defaultBk: "white",
     color: "black",
@@ -30,15 +29,12 @@ export default ({ data }) => {
   const sortBy = useCallback(e =>
     dispatch({ type: "sort", payload: e.target.value })
   );
-  const filter = useCallback(e =>
-    dispatch({ type: "filter", payload: e.target.value })
-  );
   const filterRange = useCallback(range =>
     dispatch({ type: "filterRange", payload: range })
   );
   const select = useCallback(hex => dispatch({ type: "select", payload: hex }));
 
-  const { colors, style, currentFilter, selected, ranges } = state;
+  const { colors, style, selected, ranges } = state;
   return (
     <ThemeProvider theme={style}>
       <Template>
@@ -47,8 +43,6 @@ export default ({ data }) => {
             filterRange={filterRange}
             ranges={ranges}
             sortBy={sortBy}
-            filter={filter}
-            currentFilter={currentFilter}
             reset={() => select(style.defaultBk)}
           />
         </Header>

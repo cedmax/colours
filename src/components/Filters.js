@@ -52,53 +52,51 @@ const CenterVertically = styled.span`
   }
 `;
 
-export default memo(
-  ({ reset, filtered, sortBy, filter, currentFilter, ranges, filterRange }) => {
-    const colorPickerElm = useRef(null);
-    const [rangeSelection, setRangeSelection] = useState("");
+export default memo(({ reset, sortBy, ranges, filterRange }) => {
+  const colorPickerElm = useRef(null);
+  const [rangeSelection, setRangeSelection] = useState("");
 
-    useEffect(() => {
-      new ColorRangePicker({
-        parent: colorPickerElm.current,
-        target: colorPickerElm.current,
-        colors: ranges.map(({ hex }) => hex),
-        onPick: instance => {
-          const filter =
-            (ranges.find(range => range.hex === instance.hex) || {}).name ||
-            "gray";
-          filterRange(filter);
-          setRangeSelection(filter);
-          reset();
-        },
-      });
-    }, [colorPickerElm]);
+  useEffect(() => {
+    new ColorRangePicker({
+      parent: colorPickerElm.current,
+      target: colorPickerElm.current,
+      colors: ranges.map(({ hex }) => hex),
+      onPick: instance => {
+        const filter =
+          (ranges.find(range => range.hex === instance.hex) || {}).name ||
+          "gray";
+        filterRange(filter);
+        setRangeSelection(filter);
+        reset();
+      },
+    });
+  }, [colorPickerElm]);
 
-    return (
-      <Small>
-        <Title>Sort by: </Title>
-        <select onChange={sortBy}>
-          <option value="name">Name</option>
-          <option value="hue">Hue</option>
-          <option value="hex">Hex</option>
+  return (
+    <Small>
+      <Title>Sort by: </Title>
+      <select onChange={sortBy}>
+        <option value="name">Name</option>
+        <option value="hue">Hue</option>
+        <option value="hex">Hex</option>
         <option value="lig">Lig</option>
         <option value="sat">Sat</option>
-        </select>
-        <CenterVertically>
-          <Title>Hue: </Title>
-          <Circle ref={colorPickerElm} />
-          {rangeSelection && (
-            <Title
-              onClick={() => {
-                filterRange();
-                setRangeSelection("");
-                colorPickerElm.current.style.background = background;
-              }}
-            >
-              {uCase(rangeSelection)} <span>x</span>
-            </Title>
-          )}
-        </CenterVertically>
-      </Small>
-    );
-  }
-);
+      </select>
+      <CenterVertically>
+        <Title>Hue: </Title>
+        <Circle ref={colorPickerElm} />
+        {rangeSelection && (
+          <Title
+            onClick={() => {
+              filterRange();
+              setRangeSelection("");
+              colorPickerElm.current.style.background = background;
+            }}
+          >
+            {uCase(rangeSelection)} <span>x</span>
+          </Title>
+        )}
+      </CenterVertically>
+    </Small>
+  );
+});

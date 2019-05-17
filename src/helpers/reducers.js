@@ -21,19 +21,6 @@ export default createReducers({
       colors: filtered,
     });
   },
-  filter: (state, value) => {
-    const { allColors, currentSort } = state;
-
-    const filtered = allColors.filter(color => {
-      return color.name.toLowerCase().includes(value.toLowerCase());
-    });
-
-    return sorter[currentSort]({
-      ...state,
-      currentFilter: value,
-      colors: filtered,
-    });
-  },
   sort: (state, value) => sorter[value](state),
   select: (state, hex) => {
     const { colors } = state;
