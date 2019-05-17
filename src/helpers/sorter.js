@@ -1,45 +1,35 @@
 import colorsort from "colorsort";
 
+const useColorSort = (state, dimension, currentSort) => {
+  const { colors } = state;
+  const cs = new colorsort(colors.map(({ hex }) => hex).join(", "));
+
+  cs.sort(dimension);
+
+  const sortedColors = cs.formattedValues().map(hex => {
+    const index = colors.findIndex(
+      color => color.hex.toUpperCase() === hex.toUpperCase()
+    );
+    return colors[index];
+  });
+
+  return {
+    ...state,
+    currentSort,
+    colors: sortedColors,
+  };
+};
+
 export default {
-  lum: (state, currentSort = "lum") => {
-    const { colors } = state;
-    const cs = new colorsort(colors.map(({ hex }) => hex).join(", "));
-
-    cs.sort("lightness");
-
-    const sortedColors = cs.formattedValues().map(hex => {
-      const index = colors.findIndex(
-        color => color.hex.toUpperCase() === hex.toUpperCase()
-      );
-      return colors[index];
-    });
-
-    return {
-      ...state,
-      currentSort,
-      colors: sortedColors,
-    };
+  lig: (state, currentSort = "lig") => {
+    return useColorSort(state, "lightness", currentSort);
   },
   hue: (state, currentSort = "hue") => {
-    const { colors } = state;
-    const cs = new colorsort(colors.map(({ hex }) => hex).join(", "));
-
-    cs.sort("hue");
-
-    const sortedColors = cs.formattedValues().map(hex => {
-      const index = colors.findIndex(
-        color => color.hex.toUpperCase() === hex.toUpperCase()
-      );
-      return colors[index];
-    });
-
-    return {
-      ...state,
-      currentSort,
-      colors: sortedColors,
-    };
+    return useColorSort(state, "hue", currentSort);
   },
-
+  sat: (state, currentSort = "sat") => {
+    return useColorSort(state, "saturation", currentSort);
+  },
   hex: (state, currentSort = "hex") => {
     const { colors } = state;
     colors.sort((colorA, colorB) => {

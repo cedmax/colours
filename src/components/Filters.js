@@ -80,7 +80,8 @@ export default memo(
           <option value="name">Name</option>
           <option value="hue">Hue</option>
           <option value="hex">Hex</option>
-          <option value="lum">Lum</option>
+        <option value="lig">Lig</option>
+        <option value="sat">Sat</option>
         </select>
         <CenterVertically>
           <Title>Hue: </Title>
