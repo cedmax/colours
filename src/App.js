@@ -33,14 +33,19 @@ export default ({ data }) => {
   const filter = useCallback(e =>
     dispatch({ type: "filter", payload: e.target.value })
   );
+  const filterRange = useCallback(range =>
+    dispatch({ type: "filterRange", payload: range })
+  );
   const select = useCallback(hex => dispatch({ type: "select", payload: hex }));
 
-  const { colors, style, currentFilter, selected } = state;
+  const { colors, style, currentFilter, selected, ranges } = state;
   return (
     <ThemeProvider theme={style}>
       <Template>
         <Header>
           <Filters
+            filterRange={filterRange}
+            ranges={ranges}
             sortBy={sortBy}
             filter={filter}
             currentFilter={currentFilter}

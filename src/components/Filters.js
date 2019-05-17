@@ -1,5 +1,10 @@
-import React from "react";
+import React, { useEffect, useRef, memo, useState } from "react";
 import styled from "@emotion/styled/macro";
+import ColorRangePicker from "color-range-picker";
+
+const uCase = string => {
+  return string && string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 const Small = styled.span`
   font-size: 70%;
@@ -8,23 +13,89 @@ const Small = styled.span`
 const Title = styled.span`
   opacity: ${props => props.theme.lightOpacity};
   margin-left: 0.5rem;
+
+  &:first-of-type {
+    margin-left: 0;
+  }
+
+  & span {
+    text-decoration: ${props => (!!props.onClick ? "underline" : "none")};
+    cursor: ${props => (!!props.onClick ? "pointer" : "default")};
+  }
 `;
 
-export default ({ sortBy, filter, currentFilter }) => (
-  <Small>
-    <Title>Sort by: </Title>
-    <select onChange={sortBy}>
-      <option value="name">Name</option>
-      <option value="hue">Hue</option>
-      <option value="hex">Hex</option>
-      <option value="lum">Lum</option>
-    </select>
-    <Title>Filter: </Title>
-    <input
-      onChange={filter}
-      style={{ width: 70 }}
-      type="text"
-      value={currentFilter}
-    />
-  </Small>
+const background = `rgba(0,0,0,.3)`;
+
+const Circle = styled.span`
+  position: relative;
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: 1px solid ${background};
+  background-color: ${background};
+  vertical-align: middle;
+
+  & canvas {
+    z-index: 1;
+  }
+`;
+
+const CenterVertically = styled.span`
+  margin-top: 5px;
+  margin-left: 0.5rem;
+  align-items: center;
+  display: inline-flex;
+  * + * {
+    margin-left: 5px;
+  }
+`;
+
+export default memo(
+  ({ reset, filtered, sortBy, filter, currentFilter, ranges, filterRange }) => {
+    const colorPickerElm = useRef(null);
+    const [rangeSelection, setRangeSelection] = useState("");
+
+    useEffect(() => {
+      new ColorRangePicker({
+        parent: colorPickerElm.current,
+        target: colorPickerElm.current,
+        colors: ranges.map(({ hex }) => hex),
+        onPick: instance => {
+          const filter =
+            (ranges.find(range => range.hex === instance.hex) || {}).name ||
+            "gray";
+          filterRange(filter);
+          setRangeSelection(filter);
+        },
+      });
+    }, [colorPickerElm]);
+
+    return (
+      <Small>
+        <Title>Sort by: </Title>
+        <select onChange={sortBy}>
+          <option value="name">Name</option>
+          <option value="hue">Hue</option>
+          <option value="hex">Hex</option>
+          <option value="lum">Lum</option>
+        </select>
+        <CenterVertically>
+          <Title>Hue: </Title>
+          <Circle ref={colorPickerElm} />
+          {rangeSelection && (
+            <Title
+              onClick={() => {
+                filterRange();
+                setRangeSelection("");
+                colorPickerElm.current.style.background = background;
+              }}
+            >
+              {uCase(rangeSelection)} <span>x</span>
+            </Title>
+          )}
+        </CenterVertically>
+      </Small>
+    );
+  }
 );
