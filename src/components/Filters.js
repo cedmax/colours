@@ -91,6 +91,7 @@ export default memo(({ reset, sortBy, ranges, filterRange }) => {
               filterRange();
               setRangeSelection("");
               colorPickerElm.current.style.background = background;
+              reset();
             }}
           >
             {uCase(rangeSelection)} <span>x</span>
