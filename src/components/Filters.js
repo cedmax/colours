@@ -17,6 +17,7 @@ export default ({ sortBy, filter, currentFilter }) => (
       <option value="name">Name</option>
       <option value="hue">Hue</option>
       <option value="hex">Hex</option>
+      <option value="lum">Lum</option>
     </select>
     <Title>Filter: </Title>
     <input

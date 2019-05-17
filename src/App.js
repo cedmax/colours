@@ -13,6 +13,7 @@ const defaultState = colors => ({
   selected: {
     hex: "",
   },
+  currentSort: "name",
   currentFilter: "",
   style: {
     defaultBk: "white",

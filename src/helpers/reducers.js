@@ -8,17 +8,19 @@ export const actionObject = (type, payload) => ({ type, payload });
 
 export default createReducers({
   filter: (state, value) => {
-    const filtered = state.allColors.filter(color => {
+    const { allColors, currentSort } = state;
+
+    const filtered = allColors.filter(color => {
       return color.name.toLowerCase().includes(value.toLowerCase());
     });
 
-    return {
+    return sorter[currentSort]({
       ...state,
       currentFilter: value,
       colors: filtered,
-    };
+    });
   },
-  sort: (state, value) => sorter[value](state),
+  sort: (state, value) => sorter[value](state, value),
   select: (state, hex) => {
     const { colors } = state;
     const selected = colors.find(color => color.hex === hex);
