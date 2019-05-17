@@ -35,6 +35,7 @@ const Circle = styled.span`
   border: 1px solid ${background};
   background-color: ${background};
   vertical-align: middle;
+  margin: 0 5px;
 
   & canvas {
     z-index: 1;
@@ -46,8 +47,8 @@ const CenterVertically = styled.span`
   margin-left: 0.5rem;
   align-items: center;
   display: inline-flex;
-  * + * {
-    margin-left: 5px;
+  ${Circle} + ${Title} {
+    margin-left: 0;
   }
 `;
 
