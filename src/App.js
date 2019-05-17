@@ -7,8 +7,9 @@ import Header from "./components/Header";
 import List from "./components/List";
 import reducers from "./helpers/reducers";
 
-const defaultState = colors => ({
+const defaultState = ({colors, ranges}) => ({
   allColors: colors,
+  ranges,
   colors,
   selected: {
     hex: "",
