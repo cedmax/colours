@@ -79,7 +79,7 @@ export default memo(({ reset, sortBy, ranges, filterRange }) => {
         <option value="name">Name</option>
         <option value="hue">Hue</option>
         <option value="hex">Hex</option>
-        <option value="lig">Lig</option>
+        <option value="lig">Light</option>
         <option value="sat">Sat</option>
       </select>
       <CenterVertically>
