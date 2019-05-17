@@ -14,7 +14,7 @@ export default React.memo(props => {
   if (hex !== props.hex) {
     setState({
       hex: props.hex,
-      open: true,
+      open: props.hex !==props.defaultHex,
     });
   }
 

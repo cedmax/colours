@@ -49,6 +49,7 @@ export default ({ data }) => {
             sortBy={sortBy}
             filter={filter}
             currentFilter={currentFilter}
+            reset={() => select(style.defaultBk)}
           />
         </Header>
         <List colors={colors} onClick={select} />

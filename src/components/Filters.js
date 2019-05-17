@@ -67,6 +67,7 @@ export default memo(
             "gray";
           filterRange(filter);
           setRangeSelection(filter);
+          reset();
         },
       });
     }, [colorPickerElm]);
