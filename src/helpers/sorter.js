@@ -1,7 +1,7 @@
 import colorsort from "colorsort";
 
 export default {
-  lum: (state, currentSort) => {
+  lum: (state, currentSort = "lum") => {
     const { colors } = state;
     const cs = new colorsort(colors.map(({ hex }) => hex).join(", "));
 
@@ -20,7 +20,7 @@ export default {
       colors: sortedColors,
     };
   },
-  hue: (state, currentSort) => {
+  hue: (state, currentSort = "hue") => {
     const { colors } = state;
     const cs = new colorsort(colors.map(({ hex }) => hex).join(", "));
 
@@ -40,7 +40,7 @@ export default {
     };
   },
 
-  hex: (state, currentSort) => {
+  hex: (state, currentSort = "hex") => {
     const { colors } = state;
     colors.sort((colorA, colorB) => {
       const aHex = colorA.hex.replace("#", "");
@@ -57,7 +57,7 @@ export default {
     };
   },
 
-  name: (state, currentSort) => {
+  name: (state, currentSort = "name") => {
     const { colors } = state;
     colors.sort((colorA, colorB) => {
       if (colorA.name < colorB.name) {
