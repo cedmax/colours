@@ -35,13 +35,13 @@ export default () => {
     const sortingFunction = sorters[sortBy];
     setCurrentSortBy(sortBy);
     setColors(sortingFunction);
-  });
+  }, []);
 
   const filter = useCallback(currentFilter => {
     const colors = getFilteredColors(originalList, currentFilter);
     setCurrentFilter(currentFilter);
     setColors(colors);
-  });
+  }, []);
 
   const onColorChange = useCallback(hex => {
     setStyle({
@@ -49,7 +49,7 @@ export default () => {
       background: hex,
       color: getMostReadable(hex),
     });
-  });
+  }, [style]);
 
   const [urlRestored, setUrlRestored] = useState(false);
   useEffect(() => {
@@ -66,7 +66,7 @@ export default () => {
         currentFilter,
       });
     }
-  }, [currentSortBy, currentFilter]);
+  }, [currentSortBy, currentFilter, urlRestored, sortBy, filter]);
 
   return (
     <ThemeProvider theme={style}>

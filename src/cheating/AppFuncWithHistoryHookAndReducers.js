@@ -24,12 +24,13 @@ const defaultState = {
 export default () => {
   const [state, dispatch] = useReducer(reducers, defaultState);
 
-  const emitDispatch = useCallback((type, payload) =>
-    dispatch({ type, payload })
+  const emitDispatch = useCallback(
+    (type, payload) => dispatch({ type, payload }),
+    []
   );
-  const sortBy = useCallback(sortBy => emitDispatch("sort", sortBy));
-  const filter = useCallback(filter => emitDispatch("filter", filter));
-  const onColorChange = useCallback(hex => emitDispatch("change", hex));
+  const sortBy = useCallback(sortBy => emitDispatch("sort", sortBy), [emitDispatch]);
+  const filter = useCallback(filter => emitDispatch("filter", filter), [emitDispatch]);
+  const onColorChange = useCallback(hex => emitDispatch("change", hex), [emitDispatch]);
 
   const { currentFilter, currentSortBy, style, colors } = state;
   useQueryString(

@@ -31,13 +31,13 @@ export default () => {
     const sortingFunction = sorters[sortBy];
     setCurrentSortBy(sortBy);
     setColors(sortingFunction);
-  });
+  }, []);
 
   const filter = useCallback(currentFilter => {
     const colors = getFilteredColors(originalList, currentFilter);
     setCurrentFilter(currentFilter);
     setColors(colors);
-  });
+  }, []);
 
   const onColorChange = useCallback(hex => {
     setStyle({
@@ -45,7 +45,7 @@ export default () => {
       background: hex,
       color: getMostReadable(hex),
     });
-  });
+  }, [style]);
 
   useQueryString(
     { currentSortBy, currentFilter },
