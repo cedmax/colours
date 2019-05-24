@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Modal from "react-modal";
 import styled from "@emotion/styled/macro";
 
@@ -33,9 +33,9 @@ const CloseButton = styled.button`
   width: 25px;
 `;
 
-export default ({ title, children, close }) => (
+export default memo(({ title, children, close }) => (
   <Modal isOpen={true} style={modalStyle} contentLabel={title}>
     {children}
     <CloseButton onClick={close}>x</CloseButton>
   </Modal>
-);
+));

@@ -1,4 +1,5 @@
-import React, { Fragment } from "react";
+import React, { Fragment, memo } from "react";
+
 import {
   ColorSquare,
   ColorTitle,
@@ -20,7 +21,7 @@ const Details = ({ color }) => (
   </ColorDetails>
 );
 
-export default ({ color, onClick, forceBorder }) => (
+export default memo(({ color, onClick, forceBorder, filter }) => (
   <Fragment>
     <ColorSquare
       style={{
@@ -32,4 +33,4 @@ export default ({ color, onClick, forceBorder }) => (
     />
     <Details color={color} />
   </Fragment>
-);
+));

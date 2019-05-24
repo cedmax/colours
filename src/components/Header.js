@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "@emotion/styled/macro";
 
 const Em = styled.em`
@@ -14,7 +14,7 @@ const Small = styled.span`
   display: block;
 `;
 
-export default ({ children }) => (
+export default memo(({ children }) => (
   <Header>
     <h2>
       Colour Name <Em>/ Css Name</Em>
@@ -23,4 +23,4 @@ export default ({ children }) => (
       </Small>
     </h2>
   </Header>
-);
+));

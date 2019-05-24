@@ -70,7 +70,7 @@ export default memo(({ reset, sortBy, ranges, filterRange }) => {
         reset();
       },
     });
-  }, [colorPickerElm]);
+  }, [colorPickerElm, filterRange, ranges, reset]);
 
   return (
     <Small>
