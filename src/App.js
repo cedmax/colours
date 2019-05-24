@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useReducer, useCallback, memo } from "react";
 import { ThemeProvider } from "emotion-theming";
 import Details from "./components/Details";
 import Template from "./components/Template";
@@ -12,7 +12,7 @@ const defaultState = ({ colors, ranges }) => ({
   ranges,
   colors,
   selected: {
-    hex: "",
+    hex: "white",
   },
   currentSort: "name",
   style: {
@@ -24,17 +24,19 @@ const defaultState = ({ colors, ranges }) => ({
   },
 });
 
-export default ({ data }) => {
+export default memo(({ data }) => {
   const [state, dispatch] = useReducer(reducers, defaultState(data));
-  const sortBy = useCallback(e =>
-    dispatch({ type: "sort", payload: e.target.value })
-  );
-  const filterRange = useCallback(range =>
-    dispatch({ type: "filterRange", payload: range })
-  );
-  const select = useCallback(hex => dispatch({ type: "select", payload: hex }));
-
   const { colors, style, selected, ranges } = state;
+
+  const emit = useCallback((type, payload) => dispatch({ type, payload }), []);
+  const sortBy = useCallback(e => emit("sort", e.target.value), [emit]);
+  const filterRange = useCallback(range => emit("filterRange", range), [emit]);
+  const select = useCallback(hex => emit("select", hex), [emit]);
+  const reset = useCallback(() => select(style.defaultBk), [
+    select,
+    style.defaultBk,
+  ]);
+
   return (
     <ThemeProvider theme={style}>
       <Template>
@@ -43,7 +45,7 @@ export default ({ data }) => {
             filterRange={filterRange}
             ranges={ranges}
             sortBy={sortBy}
-            reset={() => select(style.defaultBk)}
+            reset={reset}
           />
         </Header>
         <List colors={colors} onClick={select} />
@@ -51,4 +53,4 @@ export default ({ data }) => {
       </Template>
     </ThemeProvider>
   );
-};
+});
