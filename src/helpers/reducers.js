@@ -4,39 +4,37 @@ import tinycolor from "tinycolor2";
 const createReducers = (reducers = {}) => (state, { type, payload } = {}) =>
   reducers[type] ? reducers[type](state, payload) : state;
 
-export const actionObject = (type, payload) => ({ type, payload });
-
 export default createReducers({
+  sort: (state, currentSort) => ({
+    ...state,
+    currentSort,
+    colors: sorter[currentSort](state),
+  }),
   filterRange: (state, value) => {
-    const { allColors, currentSort } = state;
     let filtered;
+    const { allColors, currentSort } = state;
+
     if (value) {
       const groups = value === "gray" ? ["white", "gray", "black"] : [value];
       filtered = allColors.filter(color => groups.includes(color.group));
     } else {
       filtered = allColors;
     }
-    return sorter[currentSort]({
-      ...state,
-      colors: filtered,
-    });
-  },
-  sort: (state, value) => sorter[value](state),
-  select: (state, hex) => {
-    const { colors } = state;
-    const selected = colors.find(color => color.hex === hex);
-    const readAble = tinycolor
-      .mostReadable(hex, ["#ffffff", "#000000"])
-      .toHexString();
 
     return {
       ...state,
-      selected: selected || { hex },
-      style: {
-        ...state.style,
-        background: hex,
-        color: readAble,
-      },
+      colors: sorter[currentSort]({
+        colors: filtered,
+      }),
     };
   },
+  select: (state, hex) => ({
+    ...state,
+    selected: { hex },
+    style: {
+      ...state.style,
+      background: hex,
+      color: tinycolor.mostReadable(hex, ["#ffffff", "#000000"]).toHexString(),
+    },
+  }),
 });

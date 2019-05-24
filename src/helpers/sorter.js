@@ -1,65 +1,41 @@
 import colorsort from "colorsort";
 
-const useColorSort = (state, dimension, currentSort) => {
-  const { colors } = state;
-  const cs = new colorsort(colors.map(({ hex }) => hex).join(", "));
+const colorToHex = ({ hex }) => hex;
+const hexToColor = colors => hex => {
+  const index = colors.findIndex(
+    color => color.hex.toUpperCase() === hex.toUpperCase()
+  );
+  return colors[index];
+};
 
-  cs.sort(dimension);
+const advancedSort = (colors, customSort) =>
+  new colorsort(colors.map(colorToHex).join(", "))
+    .sort(customSort)
+    .formattedValues()
+    .map(hexToColor(colors));
 
-  const sortedColors = cs.formattedValues().map(hex => {
-    const index = colors.findIndex(
-      color => color.hex.toUpperCase() === hex.toUpperCase()
-    );
-    return colors[index];
-  });
+const colorSort = ({ colors }, customSort) => {
+  switch (typeof customSort) {
+    case "string":
+      colors = advancedSort(colors, customSort);
+      break;
+    case "function":
+      colors = [...colors.sort(customSort)];
+      break;
+    default:
+      throw new Error("colorSort needs a custom sorter");
+  }
 
-  return {
-    ...state,
-    currentSort,
-    colors: sortedColors,
-  };
+  return colors;
 };
 
 export default {
-  lig: (state, currentSort = "lig") => {
-    return useColorSort(state, "lightness", currentSort);
-  },
-  hue: (state, currentSort = "hue") => {
-    return useColorSort(state, "hue", currentSort);
-  },
-  sat: (state, currentSort = "sat") => {
-    return useColorSort(state, "saturation", currentSort);
-  },
-  hex: (state, currentSort = "hex") => {
-    const { colors } = state;
-    colors.sort((colorA, colorB) => {
-      const aHex = colorA.hex.replace("#", "");
-      const bHex = colorB.hex.replace("#", "");
-      if (parseInt(aHex, 16) < parseInt(bHex, 16)) {
-        return -1;
-      }
-      return 1;
-    });
-    return {
-      ...state,
-      currentSort,
-      colors,
-    };
-  },
-
-  name: (state, currentSort = "name") => {
-    const { colors } = state;
-    colors.sort((colorA, colorB) => {
-      if (colorA.name < colorB.name) {
-        return -1;
-      }
-      return 1;
-    });
-
-    return {
-      ...state,
-      currentSort,
-      colors,
-    };
-  },
+  lig: state => colorSort(state, "lightness"),
+  hue: state => colorSort(state, "hue"),
+  sat: state => colorSort(state, "saturation"),
+  hex: state =>
+    colorSort(state, ({ hex: a }, { hex: b }) =>
+      parseInt(a.slice(1), 16) < parseInt(b.slice(1), 16) ? -1 : 1
+    ),
+  name: state => colorSort(state, (a, b) => (a.name < b.name ? -1 : 1)),
 };
