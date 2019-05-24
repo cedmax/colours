@@ -1,29 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import colorsHelper from "../helpers/colors";
 import Modal from "./Modal";
 import { ListColours, Columns, SectionTitle } from "./DetailsParts";
 
-export default React.memo(props => {
-  const [state, setState] = useState({
+export default memo(props => {
+  const { name, onClick, defaultHex, hex: newHex } = props;
+
+  const [{ hex, open }, setState] = useState({
     hex: "",
     open: false,
   });
 
-  const { hex, open } = state;
-
-  if (hex !== props.hex) {
+  if (hex !== newHex) {
     setState({
-      hex: props.hex,
-      open: props.hex !==props.defaultHex,
+      hex: newHex,
+      open: newHex !== defaultHex,
     });
   }
 
-  if (!open) {
-    return;
-  }
+  if (!open) return null;
 
   const { complements, triads } = colorsHelper(hex);
-  const { name, onClick, defaultHex } = props;
 
   return (
     <Modal
