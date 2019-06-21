@@ -48,7 +48,7 @@ const CenterVertically = styled.span`
   }
 `;
 
-export default memo(({ reset, qty, sortBy, ranges, filterRange }) => {
+export default memo(({ qty, sortBy, ranges, filterRange }) => {
   const colorPickerElm = useRef(null);
   const [rangeSelection, setRangeSelection] = useState("");
 
@@ -63,10 +63,9 @@ export default memo(({ reset, qty, sortBy, ranges, filterRange }) => {
           "gray";
         filterRange(filter);
         setRangeSelection(filter);
-        reset();
       },
     });
-  }, [colorPickerElm, filterRange, ranges, reset]);
+  }, [colorPickerElm, filterRange, ranges]);
 
   return (
     <Small>
@@ -87,7 +86,6 @@ export default memo(({ reset, qty, sortBy, ranges, filterRange }) => {
               filterRange();
               setRangeSelection("");
               colorPickerElm.current.style.background = background;
-              reset();
             }}
           >
             {qty} {rangeSelection}s <span>x</span>

@@ -1,6 +1,5 @@
 import React, { useReducer, useCallback, memo } from "react";
 import { ThemeProvider } from "emotion-theming";
-import Details from "./components/Details";
 import Template from "./components/Template";
 import Filters from "./components/Filters";
 import Header from "./components/Header";
@@ -17,9 +16,6 @@ const defaultState = ({ colors, ranges }) => ({
   },
   currentSort: "name",
   style: {
-    defaultBk: "white",
-    color: "black",
-    background: "white",
     opacity: 0.6,
     lightOpacity: 0.5,
   },
@@ -35,10 +31,6 @@ export default memo(({ data }) => {
   const select = useCallback((hex, name) => emit("select", { hex, name }), [
     emit,
   ]);
-  const reset = useCallback(() => select(style.defaultBk), [
-    select,
-    style.defaultBk,
-  ]);
 
   return (
     <ThemeProvider theme={style}>
@@ -50,11 +42,9 @@ export default memo(({ data }) => {
             filterRange={filterRange}
             ranges={ranges}
             sortBy={sortBy}
-            reset={reset}
           />
         </Header>
         <List colors={colors} onClick={select} />
-        <Details defaultHex={style.defaultBk} onClick={select} {...selected} />
       </Template>
     </ThemeProvider>
   );

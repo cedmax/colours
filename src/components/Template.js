@@ -1,8 +1,25 @@
 import styled from "@emotion/styled/macro";
 
 const Template = styled.div`
-  color: ${props => props.theme.color};
-  background: ${props => props.theme.background};
+  background: #fff;
+  background-size: 21px 21px;
+  background-position: 0 0, 10px 10px;
+  background-image: linear-gradient(
+      45deg,
+      #efefef 25%,
+      transparent 0,
+      transparent 75%,
+      #efefef 0,
+      #efefef
+    ),
+    linear-gradient(
+      45deg,
+      #efefef 25%,
+      transparent 0,
+      transparent 75%,
+      #efefef 0,
+      #efefef
+    );
   font-size: 15px;
   padding: 0 0 0 1.5rem;
   min-height: 100vh;

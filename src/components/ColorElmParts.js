@@ -4,16 +4,10 @@ export const ColorSquare = styled.span`
   display: inline-block;
   width: 30px;
   height: 30px;
-  border: ${props =>
-    props.hex === props.theme.background && !props.forceBorder
-      ? `1px solid ${props.hex}`
-      : "1px solid #000"};
+  border: 1px solid #000;
   margin-right: 5px;
   vertical-align: middle;
-  pointer-events: ${props =>
-    props.hex === props.theme.background ? "none" : "all"};
-  cursor: ${props =>
-    props.hex === props.theme.background ? "auto" : "pointer"};
+  cursor: pointer;
   transition: border 1s;
 `;
 
