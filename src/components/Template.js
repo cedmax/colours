@@ -6,19 +6,19 @@ const Template = styled.div`
   background-position: 0 0, 10px 10px;
   background-image: linear-gradient(
       45deg,
-      #efefef 25%,
+      #f3f3f3 25%,
       transparent 0,
       transparent 75%,
-      #efefef 0,
-      #efefef
+      #f3f3f3 0,
+      #f3f3f3
     ),
     linear-gradient(
       45deg,
-      #efefef 25%,
+      #f3f3f3 25%,
       transparent 0,
       transparent 75%,
-      #efefef 0,
-      #efefef
+      #f3f3f3 0,
+      #f3f3f3
     );
   font-size: 15px;
   padding: 0 0 0 1.5rem;
