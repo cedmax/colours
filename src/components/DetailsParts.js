@@ -1,17 +1,17 @@
-import React from "react";
+import React, { memo } from "react";
 import styled from "@emotion/styled/macro";
 import ColorElm from "./ColorElm";
-import { List, ListItem } from "./List";
+import { List } from "./List";
 
-export const ListColours = ({ list, onClick }) => (
+export const ListColours = memo(({ list, onClick }) => (
   <List>
     {list.map(hex => (
-      <ListItem key={hex}>
+      <li key={hex}>
         <ColorElm forceBorder onClick={onClick} color={{ hex }} />
-      </ListItem>
+      </li>
     ))}
   </List>
-);
+));
 
 export const Columns = styled.div`
   columns: 2;

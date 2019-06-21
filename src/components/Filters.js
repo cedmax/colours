@@ -2,10 +2,6 @@ import React, { useEffect, useRef, memo, useState } from "react";
 import styled from "@emotion/styled/macro";
 import ColorRangePicker from "color-range-picker";
 
-const uCase = string => {
-  return string && string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 const Small = styled.span`
   font-size: 70%;
 `;
@@ -52,7 +48,7 @@ const CenterVertically = styled.span`
   }
 `;
 
-export default memo(({ reset, sortBy, ranges, filterRange }) => {
+export default memo(({ reset, qty, sortBy, ranges, filterRange }) => {
   const colorPickerElm = useRef(null);
   const [rangeSelection, setRangeSelection] = useState("");
 
@@ -94,7 +90,7 @@ export default memo(({ reset, sortBy, ranges, filterRange }) => {
               reset();
             }}
           >
-            {uCase(rangeSelection)} <span>x</span>
+            {qty} {rangeSelection}s <span>x</span>
           </Title>
         )}
       </CenterVertically>

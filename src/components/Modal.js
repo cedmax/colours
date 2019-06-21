@@ -12,10 +12,15 @@ const modalStyle = {
     background: "rgba(255, 255, 255, .9)",
     top: "auto",
     left: "auto",
-    right: 20,
-    bottom: 20,
+    right: 25,
+    bottom: 25,
     overflow: "visible",
     border: 0,
+    borderRadius: 0,
+    padding: "30px 25px 20px",
+    boxSizing: "border-box",
+    maxWidth: "calc(100% - 50px)",
+    width: 310,
   },
 };
 
@@ -27,15 +32,28 @@ const CloseButton = styled.button`
   cursor: pointer;
   height: 25px;
   position: absolute;
-  right: -10px;
+  left: -10px;
   text-align: center;
   top: -10px;
   width: 25px;
+  line-height: 20px;
+`;
+
+const ModalContent = styled.div`
+  font-size: 97%;
+
+  & h2 {
+    margin-top: 0;
+  }
+
+  & h4 {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 export default memo(({ title, children, close }) => (
   <Modal isOpen={true} style={modalStyle} contentLabel={title}>
-    {children}
+    <ModalContent>{children}</ModalContent>
     <CloseButton onClick={close}>x</CloseButton>
   </Modal>
 ));

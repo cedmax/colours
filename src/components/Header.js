@@ -6,7 +6,10 @@ const Em = styled.em`
 `;
 
 const Header = styled.header`
-  max-width: 300px;
+  height: 95px;
+  box-sizing: border-box;
+  margin: -1px;
+  padding: 1px;
 `;
 
 const Small = styled.span`

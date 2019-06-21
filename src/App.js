@@ -4,6 +4,7 @@ import Details from "./components/Details";
 import Template from "./components/Template";
 import Filters from "./components/Filters";
 import Header from "./components/Header";
+import Bar from "./components/Bar";
 import List from "./components/List";
 import reducers from "./helpers/reducers";
 
@@ -31,7 +32,9 @@ export default memo(({ data }) => {
   const emit = useCallback((type, payload) => dispatch({ type, payload }), []);
   const sortBy = useCallback(e => emit("sort", e.target.value), [emit]);
   const filterRange = useCallback(range => emit("filterRange", range), [emit]);
-  const select = useCallback(hex => emit("select", hex), [emit]);
+  const select = useCallback((hex, name) => emit("select", { hex, name }), [
+    emit,
+  ]);
   const reset = useCallback(() => select(style.defaultBk), [
     select,
     style.defaultBk,
@@ -40,8 +43,10 @@ export default memo(({ data }) => {
   return (
     <ThemeProvider theme={style}>
       <Template>
+        <Bar color={selected.hex} />
         <Header>
           <Filters
+            qty={colors.length}
             filterRange={filterRange}
             ranges={ranges}
             sortBy={sortBy}

@@ -28,9 +28,9 @@ export default createReducers({
       }),
     };
   },
-  select: (state, hex) => ({
+  select: (state, { hex, name }) => ({
     ...state,
-    selected: { hex },
+    selected: { hex, name },
     style: {
       ...state.style,
       background: hex,

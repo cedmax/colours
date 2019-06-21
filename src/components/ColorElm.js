@@ -21,7 +21,7 @@ const Details = ({ color }) => (
   </ColorDetails>
 );
 
-export default memo(({ color, onClick, forceBorder, filter }) => (
+export default memo(({ color, onClick, forceBorder }) => (
   <Fragment>
     <ColorSquare
       style={{
@@ -29,7 +29,7 @@ export default memo(({ color, onClick, forceBorder, filter }) => (
       }}
       forceBorder={forceBorder}
       hex={color.hex}
-      onClick={() => onClick(color.hex)}
+      onClick={() => onClick(color.hex, color.name)}
     />
     <Details color={color} />
   </Fragment>
