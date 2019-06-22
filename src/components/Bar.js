@@ -10,8 +10,29 @@ const Bar = styled.div`
   z-index: -1;
   margin: -25px;
   border-radius: inherit;
+  background: #fff;
+  background-size: ${({ colors }) => (colors.length > 1 ? "" : `21px 21px`)};
+  background-position: ${({ colors }) =>
+    colors.length > 1 ? "" : `0 0, 10px 10px`};
   background-image: ${({ colors }) =>
-    `linear-gradient(to bottom right, ${colors.join(", ")})`};
+    colors.length > 1
+      ? `linear-gradient(to bottom right, ${colors.join(", ")})`
+      : `linear-gradient(
+        45deg,
+        #f3f3f3 25%,
+        transparent 0,
+        transparent 75%,
+        #f3f3f3 0,
+        #f3f3f3
+      ),
+      linear-gradient(
+        45deg,
+        #f3f3f3 25%,
+        transparent 0,
+        transparent 75%,
+        #f3f3f3 0,
+        #f3f3f3
+      );`};
 `;
 
 export default memo(({ color }) => {
