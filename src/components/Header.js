@@ -3,6 +3,11 @@ import styled from "@emotion/styled/macro";
 
 const Em = styled.em`
   opacity: ${props => props.theme.opacity};
+  span {
+    display: inline-block;
+    font-style: normal;
+    font-size: 105%;
+  }
 `;
 
 const Header = styled.header`
@@ -22,7 +27,10 @@ export default memo(({ children }) => (
     <h2>
       Colour Name <Em>/ Css Name</Em>
       <Small>
-        <Em>#Hex</Em> {children}
+        <Em>
+          #Hex <span>/</span> <span>rgb(r, g, b)</span>
+        </Em>{" "}
+        {children}
       </Small>
     </h2>
   </Header>

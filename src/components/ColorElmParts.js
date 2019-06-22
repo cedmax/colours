@@ -17,9 +17,14 @@ export const ColorTitle = styled.em`
 
 export const ColorHex = styled.em`
   opacity: ${props => props.theme.opacity};
-  font-variant: small-caps;
   font-size: 80%;
   display: block;
+
+  span {
+    display: inline-block;
+    font-style: normal;
+    font-size: 105%;
+  }
 `;
 
 export const ColorDetails = styled.span`

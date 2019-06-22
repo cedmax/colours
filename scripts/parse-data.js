@@ -2,7 +2,8 @@ const fs = require("fs");
 const cheerio = require("cheerio");
 const settings = require("./settings.json");
 const cssColors = require("./data/css-colors.json");
-const hsl = require('hsl-to-hex')
+const hsl = require("hsl-to-hex");
+const tinycolor = require("tinycolor2");
 
 const classification = [
   { prop: "l", match: "min", threshold: 10, value: "black" },
@@ -20,13 +21,13 @@ const classification = [
 ];
 
 const classifyColor = hsl => {
-  try{
-  return classification.find(({ prop, match, threshold }) => {
-    return Math[match](hsl[prop], threshold) === hsl[prop];
-  }).value;
-  } catch(e) {
-    console.log(hsl)
-    throw e
+  try {
+    return classification.find(({ prop, match, threshold }) => {
+      return Math[match](hsl[prop], threshold) === hsl[prop];
+    }).value;
+  } catch (e) {
+    console.log(hsl);
+    throw e;
   }
 };
 
@@ -56,6 +57,7 @@ settings.dataSets.forEach(key => {
       if (hex.startsWith("#") && !colors.find(color => color.hex === hex)) {
         colors.push({
           name,
+          rgb: tinycolor(hex).toRgbString(),
           hex,
           sortHue,
           group: classifyColor({
@@ -85,25 +87,28 @@ const colWithCssMatch = colors.map(color => {
   return color;
 });
 
-const defaults = { h: 0, s: 100, l:50 }
-const ranges = classification.reduce((acc, {threshold, match, prop, value}) => {
-  const color = {...defaults};
-  if (prop === 'h' && !acc.find(col=> col.name ===value)) {
-    while (Math[match](color.h, threshold) !== threshold) {
-      color.h++;
-    }
-    color.h = color.h - 10
+const defaults = { h: 0, s: 100, l: 50 };
+const ranges = classification.reduce(
+  (acc, { threshold, match, prop, value }) => {
+    const color = { ...defaults };
+    if (prop === "h" && !acc.find(col => col.name === value)) {
+      while (Math[match](color.h, threshold) !== threshold) {
+        color.h++;
+      }
+      color.h = color.h - 10;
 
-    acc.push({
-      hex: hsl(color.h,color.s, color.l),
-      name: value
-    })
-  }
-  
-  return acc
-}, []);
+      acc.push({
+        hex: hsl(color.h, color.s, color.l),
+        name: value,
+      });
+    }
+
+    return acc;
+  },
+  []
+);
 
 const html = fs.readFileSync(`${__dirname}/../public/index.html`);
 const $ = cheerio.load(html);
-$("#data").text(JSON.stringify({colors: colWithCssMatch, ranges  }));
+$("#data").text(JSON.stringify({ colors: colWithCssMatch, ranges }));
 fs.writeFileSync(`${__dirname}/../public/index.html`, $.html(), "UTF-8");

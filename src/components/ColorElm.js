@@ -13,7 +13,9 @@ const Details = ({ color }) => (
       <Fragment>
         {color.name}{" "}
         {color.cssName && <ColorTitle>/ {color.cssName} </ColorTitle>}
-        <ColorHex>{color.hex}</ColorHex>
+        <ColorHex>
+          {color.hex} <span>/</span> <span>{color.rgb}</span>
+        </ColorHex>
       </Fragment>
     ) : (
       <ColorTitle>{color.hex}</ColorTitle>
