@@ -63,7 +63,7 @@ export default memo(({ qty, sortBy, ranges, filterRange }) => {
           "gray";
         filterRange(filter);
         setRangeSelection(filter);
-      },
+      }
     });
   }, [colorPickerElm, filterRange, ranges]);
 

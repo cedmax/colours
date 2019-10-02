@@ -4,19 +4,19 @@ import {
   ColorSquare,
   ColorTitle,
   ColorHex,
-  ColorDetails,
+  ColorDetails
 } from "./ColorElmParts";
 
 const Details = ({ color }) => (
   <ColorDetails>
     {color.name ? (
-      <Fragment>
+      <>
         {color.name}{" "}
         {color.cssName && <ColorTitle>/ {color.cssName} </ColorTitle>}
         <ColorHex>
           {color.hex} <span>/</span> <span>{color.rgb}</span>
         </ColorHex>
-      </Fragment>
+      </>
     ) : (
       <ColorTitle>{color.hex}</ColorTitle>
     )}
@@ -24,15 +24,15 @@ const Details = ({ color }) => (
 );
 
 export default memo(({ color, onClick, forceBorder }) => (
-  <Fragment>
+  <>
     <ColorSquare
       style={{
-        background: color.hex,
+        background: color.hex
       }}
       forceBorder={forceBorder}
       hex={color.hex}
       onClick={() => onClick(color.hex, color.name)}
     />
     <Details color={color} />
-  </Fragment>
+  </>
 ));
