@@ -18,11 +18,6 @@ export const List = styled.ol`
   flex-wrap: wrap;
   justify-content: space-between;
 
-  &::after {
-    content: "";
-    flex-grow: 1;
-  }
-
   & > li {
     flex-direction: column-reverse;
     margin-bottom: 10px;
@@ -38,6 +33,12 @@ export const List = styled.ol`
       opacity: 0.5;
     }
   }
+  .filler {
+    height: 0;
+    border: 0;
+    margin-bottom: 0;
+    padding: 0;
+  }
 `;
 
 const Li = memo(({ color, onClick }) => (
@@ -46,6 +47,10 @@ const Li = memo(({ color, onClick }) => (
   </li>
 ));
 
+const Filler = memo(() =>
+  [...Array(20)].map((a, i) => <li key={i} className="filler"></li>)
+);
+
 export default memo(({ colors, onClick }) =>
   !!colors.length ? (
     <ListWrapper>
@@ -53,6 +58,7 @@ export default memo(({ colors, onClick }) =>
         {colors.map(color => (
           <Li color={color} onClick={onClick} key={color.hex} />
         ))}
+        <Filler />
       </List>
     </ListWrapper>
   ) : (
