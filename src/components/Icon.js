@@ -18,6 +18,7 @@ const Button = styled.button`
   }
 
   span {
+    pointer-events: none;
     position: absolute;
     left: 8px;
     top: 15px;

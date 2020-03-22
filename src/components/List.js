@@ -26,7 +26,6 @@ export const List = styled.ol`
   & > li {
     flex-direction: column-reverse;
     margin-bottom: 10px;
-    white-space: pre;
     border: 3px solid #000;
     margin-left: 0.5rem;
     min-width: 135px;

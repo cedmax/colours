@@ -5,16 +5,17 @@ import Button from "./Icon";
 import {
   ColorSquare,
   ColorTitle,
-  ColorHex,
   ColorDetails,
   ColorButtons,
   ColorText
 } from "./ColorElmParts";
 
+const copiedText = "copied!";
+
 const ColorButton = ({ updateText, text, type, value }) => (
   <Button
     onMouseOver={() => {
-      updateText(`copy <span>${value}</span>`);
+      updateText(value);
     }}
     onMouseOut={() => {
       if (copiedText !== text) {
@@ -37,9 +38,6 @@ const Details = ({ color }) => (
       <Fragment>
         {color.name}{" "}
         {color.cssName && <ColorTitle>/ {color.cssName} </ColorTitle>}
-        <ColorHex>
-          {color.hex} <span>/</span> <span>{color.rgb}</span>
-        </ColorHex>
       </Fragment>
     ) : (
       <ColorTitle>{color.hex}</ColorTitle>
@@ -47,13 +45,11 @@ const Details = ({ color }) => (
   </ColorDetails>
 );
 
-const copiedText = "copied!";
-
 export default memo(({ color, onClick, forceBorder }) => {
   const [text, setText] = useState("");
   useEffect(() => {
     if (copiedText === text) {
-      setTimeout(() => setText(""), 2000);
+      setTimeout(() => setText(""), 222000);
     }
   }, [text]);
   return (
@@ -66,12 +62,7 @@ export default memo(({ color, onClick, forceBorder }) => {
         hex={color.hex}
         onClick={() => onClick(color.hex, color.name)}
       >
-        {text && (
-          <ColorText
-            dangerouslySetInnerHTML={{ __html: text }}
-            color={color.hex}
-          />
-        )}
+        {text && <ColorText color={color.hex}>{text}</ColorText>}
         <ColorButtons>
           <ColorButton
             updateText={setText}

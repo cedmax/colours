@@ -15,28 +15,14 @@ export const ColorTitle = styled.em`
   opacity: ${props => props.theme.opacity};
 `;
 
-export const ColorHex = styled.em`
-  opacity: ${props => props.theme.opacity};
-  font-size: 80%;
-  display: block;
-
-  span {
-    display: inline-block;
-    font-style: normal;
-    font-size: 105%;
-  }
-`;
-
 export const ColorDetails = styled.span`
   width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
   padding: 0.3rem;
   background: rgba(253, 253, 253, 0.9);
   display: inline-block;
   vertical-align: middle;
   line-height: 1.2;
-  height: 2.75rem;
+  min-height: 2.75rem;
   top: 0;
   position: absolute;
   border-bottom: 3px solid #000;
@@ -60,8 +46,6 @@ export const ColorText = styled.div`
   text-align: center;
   width: 100%;
   padding: 0 0.5rem;
-  white-space: normal;
-  span {
-    white-space: pre;
-  }
+  font-weight: bold;
+  white-space: pre;
 `;
