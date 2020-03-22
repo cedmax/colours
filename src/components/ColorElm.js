@@ -1,4 +1,4 @@
-import React, { Fragment, memo, useState, useEffect } from "react";
+import React, { Fragment, memo, useState, useCallback, useEffect } from "react";
 import copy from "copy-to-clipboard";
 import Button from "./Icon";
 
@@ -12,27 +12,38 @@ import {
 
 const copiedText = "copied!";
 
-const ColorButton = ({ updateText, text, type, value }) => (
-  <Button
-    onMouseOver={() => {
-      updateText(value);
-    }}
-    onMouseOut={() => {
-      if (copiedText !== text) {
-        updateText("");
-      }
-    }}
-    onClick={e => {
+const ColorButton = memo(({ updateText, text, type, value }) => {
+  const onMouseOver = useCallback(() => {
+    updateText(value);
+  }, [updateText, value]);
+
+  const onMouseOut = useCallback(() => {
+    if (copiedText !== text) {
+      updateText("");
+    }
+  }, [updateText, text]);
+
+  const onClick = useCallback(
+    e => {
       copy(value);
       e.stopPropagation();
       updateText(copiedText);
-    }}
-    type={type}
-    title={value}
-  />
-);
+    },
+    [updateText, value]
+  );
 
-const Details = ({ color }) => (
+  return (
+    <Button
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+      onClick={onClick}
+      type={type}
+      title={value}
+    />
+  );
+});
+
+const Details = memo(({ color }) => (
   <ColorDetails>
     {color.name ? (
       <Fragment>
@@ -43,15 +54,17 @@ const Details = ({ color }) => (
       <ColorTitle>{color.hex}</ColorTitle>
     )}
   </ColorDetails>
-);
+));
 
 export default memo(({ color, onClick, forceBorder }) => {
   const [text, setText] = useState("");
+
   useEffect(() => {
     if (copiedText === text) {
-      setTimeout(() => setText(""), 222000);
+      setTimeout(() => setText(""), 5000);
     }
   }, [text]);
+
   return (
     <Fragment>
       <ColorSquare
@@ -63,6 +76,7 @@ export default memo(({ color, onClick, forceBorder }) => {
         onClick={() => onClick(color.hex, color.name)}
       >
         {text && <ColorText color={color.hex}>{text}</ColorText>}
+
         <ColorButtons>
           <ColorButton
             updateText={setText}
