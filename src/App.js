@@ -12,13 +12,13 @@ const defaultState = ({ colors, ranges }) => ({
   ranges,
   colors,
   selected: {
-    hex: "white",
+    hex: "white"
   },
   currentSort: "name",
   style: {
     opacity: 0.6,
-    lightOpacity: 0.5,
-  },
+    lightOpacity: 0.5
+  }
 });
 
 export default memo(({ data }) => {
@@ -29,7 +29,7 @@ export default memo(({ data }) => {
   const sortBy = useCallback(e => emit("sort", e.target.value), [emit]);
   const filterRange = useCallback(range => emit("filterRange", range), [emit]);
   const select = useCallback((hex, name) => emit("select", { hex, name }), [
-    emit,
+    emit
   ]);
 
   return (

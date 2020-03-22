@@ -40,14 +40,18 @@ export const List = styled.ol`
   }
 `;
 
+const Li = memo(({ color, onClick }) => (
+  <li>
+    <ColorElm onClick={onClick} color={color} />
+  </li>
+));
+
 export default memo(({ colors, onClick }) =>
   !!colors.length ? (
     <ListWrapper>
       <List>
         {colors.map(color => (
-          <li key={color.hex}>
-            <ColorElm onClick={onClick} color={color} />
-          </li>
+          <Li color={color} onClick={onClick} key={color.hex} />
         ))}
       </List>
     </ListWrapper>
