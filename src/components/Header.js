@@ -12,7 +12,6 @@ const Em = styled.em`
 
 const Header = styled.header`
   height: 95px;
-  box-sizing: border-box;
   margin: -1px;
   padding: 1px;
 `;

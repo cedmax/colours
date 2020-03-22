@@ -27,7 +27,6 @@ const Template = styled.div`
   border: 25px solid transparent;
   background-clip: padding-box;
   height: 100%;
-  box-sizing: border-box;
   position: absolute;
   width: 100%;
 `;
