@@ -33,7 +33,7 @@
   ],
   "devDependencies": {
     "async": "^2.6.3",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "cheerio": "^1.0.0-rc.3",
     "hsl-to-hex": "^1.0.0"
   }
