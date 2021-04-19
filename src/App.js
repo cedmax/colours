@@ -1,5 +1,5 @@
 import React, { useReducer, useCallback, memo } from "react";
-import { ThemeProvider } from "emotion-theming";
+import { ThemeProvider } from "@emotion/react";
 import Template from "./components/Template";
 import Filters from "./components/Filters";
 import Header from "./components/Header";
