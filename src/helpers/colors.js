@@ -2,7 +2,7 @@ import tinycolor from "tinycolor2";
 
 const uniq = arr => [...new Set(arr)];
 
-export default hex => {
+const colorsHelper = hex => {
   const color = tinycolor(hex);
   const complements = uniq(
     color.splitcomplement().map(an => an.toHexString().toUpperCase())
@@ -13,3 +13,5 @@ export default hex => {
     triads,
   };
 };
+
+export default colorsHelper

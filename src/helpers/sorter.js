@@ -29,7 +29,7 @@ const colorSort = ({ colors }, customSort) => {
   return colors;
 };
 
-export default {
+const sorters = {
   lig: state => colorSort(state, "lightness"),
   hue: state => colorSort(state, "hue"),
   sat: state => colorSort(state, "saturation"),
@@ -39,3 +39,6 @@ export default {
     ),
   name: state => colorSort(state, (a, b) => (a.name < b.name ? -1 : 1)),
 };
+
+
+export default sorters
