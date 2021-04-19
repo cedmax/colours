@@ -48,8 +48,9 @@ settings.dataSets.forEach(key => {
             .text()
             .trim()
         );
-      const [name, hex, r, g, b, sortHue, sat1, lum] = data;
-      const hueDeg = sortHue.split("♠")[1] || "0°";
+
+      const [name, hex, r, g, b, hueDeg, sat1, lum] = data;
+      const sortHue = $(tr).find("[data-sort-value]").attr('data-sort-value')
       const h = parseInt(hueDeg.substring(0, hueDeg.length - 1), 10);
       const s = parseInt(sat1.substring(0, sat1.length - 1), 10);
       const l = parseInt(lum.substring(0, lum.length - 1), 10);
