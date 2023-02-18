@@ -110,7 +110,7 @@ export default memo(({ qty, sortBy, ranges, filterRange }) => {
         {rangeSelection && (
           <Title
             onClick={() => {
-              filterRange();
+              filterRange("");
               setRangeSelection("");
               colorPickerElm.current.style.background = background;
             }}
