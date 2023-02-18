@@ -48,23 +48,40 @@ const CenterVertically = styled.span`
   }
 `;
 
+const Button = styled.button`
+  &.selected {
+    background: #d0d0d7;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 2px 5px;
+  }
+`;
+
 export default memo(({ qty, sortBy, ranges, filterRange }) => {
   const colorPickerElm = useRef(null);
   const [rangeSelection, setRangeSelection] = useState("");
 
   useEffect(() => {
-    new ColorRangePicker({
-      parent: colorPickerElm.current,
-      target: colorPickerElm.current,
-      colors: ranges.map(({ hex }) => hex),
-      onPick: instance => {
-        const filter =
-          (ranges.find(range => range.hex === instance.hex) || {}).name ||
-          "gray";
-        filterRange(filter);
-        setRangeSelection(filter);
-      },
-    });
+    let picker;
+    if (colorPickerElm.current) {
+      try {
+        picker = new ColorRangePicker({
+          parent: colorPickerElm.current,
+          target: colorPickerElm.current,
+          colors: ranges.map(({ hex }) => hex),
+          onPick: instance => {
+            const filter =
+              (ranges.find(range => range.hex === instance.hex) || {}).name ||
+              "gray";
+            filterRange(filter);
+            setRangeSelection(filter);
+          },
+        });
+      } catch (e) {}
+    }
+    return () => {
+      picker.destroy();
+    };
   }, [colorPickerElm, filterRange, ranges]);
 
   return (
@@ -76,7 +93,17 @@ export default memo(({ qty, sortBy, ranges, filterRange }) => {
         <option value="hex">Hex</option>
         <option value="lig">Light</option>
         <option value="sat">Sat</option>
-      </select>
+      </select>{" "}
+      <Button
+        onClick={e => {
+          filterRange(
+            e.target.classList.contains("selected") ? "" : "cssNamed"
+          );
+          e.target.classList.toggle("selected");
+        }}
+      >
+        cssNamed
+      </Button>
       <CenterVertically>
         <Title>Hue: </Title>
         <Circle ref={colorPickerElm} />
