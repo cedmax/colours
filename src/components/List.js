@@ -51,7 +51,7 @@ export default memo(({ colors, onClick }) => {
           }}
         >
           {({ style, rowIndex, columnIndex }, i) => {
-            const idx = rowIndex * 4 + columnIndex;
+            const idx = rowIndex * Math.floor((width - 50) / 230) + columnIndex;
             const color = colors[idx];
             return color ? (
               <Li

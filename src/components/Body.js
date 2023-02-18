@@ -32,11 +32,16 @@ const Body = () => {
       });
 
     let filtered;
-    if (range) {
-      const groups = range === "gray" ? ["white", "gray", "black"] : [range];
-      filtered = data.colors.filter(color => groups.includes(color.group));
-    } else {
-      filtered = data.colors;
+    switch (range) {
+      case "":
+        filtered = data.colors;
+        break;
+      case "cssNamed":
+        filtered = data.colors.filter(({ cssName }) => !!cssName);
+        break;
+      default:
+        const groups = range === "gray" ? ["white", "gray", "black"] : [range];
+        filtered = data.colors.filter(color => groups.includes(color.group));
     }
 
     sort(filtered, sorting).then(colors => {
