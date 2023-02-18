@@ -53,9 +53,11 @@ exports.classify = hsl => {
 exports.matchCssColors = colors =>
   colors.map(color => {
     const cssMatch = cssColors.find(cssColor => {
-      const [hex] = cssColor;
-      return color.hex === hex;
+      const [name, hex] = cssColor;
+
+      return color.hex.toUpperCase() === hex.toUpperCase();
     });
+
     if (cssMatch) {
       const [name] = cssMatch;
       color.cssName = name;
