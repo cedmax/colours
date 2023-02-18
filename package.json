@@ -15,6 +15,8 @@
     "react-dom": "^18.2.0",
     "react-loading": "^2.0.3",
     "react-scripts": "4.0.3",
+    "react-virtualized-auto-sizer": "^1.0.7",
+    "react-window": "^1.8.8",
     "tinycolor2": "^1.6.0",
     "use-reducer-async": "^2.1.1",
     "workbox-background-sync": "^6.5.4",
@@ -28,7 +30,8 @@
     "workbox-range-requests": "^6.5.4",
     "workbox-routing": "^6.5.4",
     "workbox-strategies": "^6.5.4",
-    "workbox-streams": "^6.5.4"
+    "workbox-streams": "^6.5.4",
+    "workerize-loader": "^2.0.2"
   },
   "scripts": {
     "start": "react-scripts start",

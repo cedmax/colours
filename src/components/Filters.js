@@ -53,18 +53,26 @@ export default memo(({ qty, sortBy, ranges, filterRange }) => {
   const [rangeSelection, setRangeSelection] = useState("");
 
   useEffect(() => {
-    new ColorRangePicker({
-      parent: colorPickerElm.current,
-      target: colorPickerElm.current,
-      colors: ranges.map(({ hex }) => hex),
-      onPick: instance => {
-        const filter =
-          (ranges.find(range => range.hex === instance.hex) || {}).name ||
-          "gray";
-        filterRange(filter);
-        setRangeSelection(filter);
-      },
-    });
+    let picker;
+    if (colorPickerElm.current) {
+      try {
+        picker = new ColorRangePicker({
+          parent: colorPickerElm.current,
+          target: colorPickerElm.current,
+          colors: ranges.map(({ hex }) => hex),
+          onPick: instance => {
+            const filter =
+              (ranges.find(range => range.hex === instance.hex) || {}).name ||
+              "gray";
+            filterRange(filter);
+            setRangeSelection(filter);
+          },
+        });
+      } catch (e) {}
+    }
+    return () => {
+      picker.destroy();
+    };
   }, [colorPickerElm, filterRange, ranges]);
 
   return (

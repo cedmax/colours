@@ -69,3 +69,12 @@ exports.saveToHTML = colors => {
   $("#data").text(JSON.stringify({ colors, ranges }));
   fs.writeFileSync(`${__dirname}/../public/index.html`, $.html(), "UTF-8");
 };
+
+exports.saveToJSON = colors => {
+  const html = fs.readFileSync(`${__dirname}/../public/index.html`);
+  const $ = cheerio.load(html);
+  $("#data").text("");
+  fs.writeFileSync(`${__dirname}/../public/index.html`, $.html(), "UTF-8");
+  const data = JSON.stringify({ colors, ranges });
+  fs.writeFileSync(`${__dirname}/../src/colors.json`, data, "UTF-8");
+};

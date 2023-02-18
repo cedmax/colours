@@ -2,7 +2,7 @@ const settings = require("./settings.json");
 const tinycolor = require("tinycolor2");
 const axios = require("axios");
 
-const { classify, matchCssColors, saveToHTML } = require("./utils");
+const { classify, matchCssColors, saveToJSON } = require("./utils");
 
 const translateHSL = ({ h, s, l }) => {
   return {
@@ -31,5 +31,5 @@ const translateHSL = ({ h, s, l }) => {
 
   const colWithCssMatch = matchCssColors(colors);
 
-  saveToHTML(colWithCssMatch);
+  saveToJSON(colWithCssMatch);
 })();
