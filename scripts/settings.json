@@ -1,5 +1,5 @@
 {
   "dataSets": ["A-F", "G-M", "N-Z"],
   "baseUrl": "https://en.wikipedia.org/wiki/List_of_colors:_",
-  "source": "https://unpkg.com/color-name-list@10.2.0/dist/colornames.bestof.json"
+  "source": "https://unpkg.com/color-name-list@10.3.0/dist/colornames.json"
 }
